@@ -11,10 +11,10 @@ function App() {
   
   return (
     <Container>
-      <h1>{test}</h1>
-      <div style={{ display: "flex", justifyContent: 'space-evenly', width: '100%'}}>
-        <button onClick={() => dispatch(increment())}>+</button>
-        <button onClick={() => dispatch(decrement())}>-</button>
+      <H1>{test}</H1>
+      <div style={{ display: "flex", justifyContent: 'space-evenly', width: '100%', backgroundColor: 'transparent' }}>
+        <Button onClick={() => dispatch(increment())}>+</Button>
+        <Button onClick={() => dispatch(decrement())}>-</Button>
       </div>
     </Container>
   )
@@ -32,4 +32,15 @@ const Container = styled.div`
   font-size: ${h};
   background-color: #6200ee;
   flex-direction: column;
+`
+const H1 = styled.h1`
+  background-color: transparent;
+  color: #fff;
+`
+
+const Button = styled.button`
+  width: 4rem;
+  height: 2rem;
+  border-radius: 5px;
+  outline: none;
 `
