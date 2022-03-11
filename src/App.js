@@ -1,11 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './store/test';
 
 function App() {
+  const test = useSelector(state => state.testReducer.count);
+  const dispatch = useDispatch();
+  
+
   
   return (
     <Container>
-      Hello Gallery??
+      <h1>{test}</h1>
+      <div style={{ display: "flex", justifyContent: 'space-evenly', width: '100%'}}>
+        <button onClick={() => dispatch(increment())}>+</button>
+        <button onClick={() => dispatch(decrement())}>-</button>
+      </div>
     </Container>
   )
 }
@@ -20,5 +30,6 @@ const Container = styled.div`
   justify-content: center;
   height: 100vh;
   font-size: ${h};
-  background-color: #6200ee
+  background-color: #6200ee;
+  flex-direction: column;
 `
