@@ -6,8 +6,10 @@ import { increment, decrement } from './store/test';
 function App() {
   const test = useSelector(state => state.testReducer.count);
   const dispatch = useDispatch();
-  
 
+  console.log(process.env.REACT_APP_ACCESS_KEY);
+  console.log(process.env.REACT_APP_SECRET_KEY);
+  console.log(process.env.REACT_APP_REDIRECT_URI);
   
   return (
     <Container>
@@ -16,6 +18,7 @@ function App() {
         <Button onClick={() => dispatch(increment())}>+</Button>
         <Button onClick={() => dispatch(decrement())}>-</Button>
       </div>
+      <h3>{process.env.REACT_APP_TEST}</h3>
     </Container>
   )
 }
@@ -23,7 +26,7 @@ function App() {
 export default App;
 
 // const col = 'black'
-const h = '30vh'
+const h = '10vh'
 const Container = styled.div`
   display: flex;
   align-items: center;
