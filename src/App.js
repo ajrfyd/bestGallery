@@ -7,9 +7,7 @@ function App() {
   const test = useSelector(state => state.testReducer.count);
   const dispatch = useDispatch();
 
-  console.log(process.env.REACT_APP_ACCESS_KEY);
-  console.log(process.env.REACT_APP_SECRET_KEY);
-  console.log(process.env.REACT_APP_REDIRECT_URI);
+  console.log(process.env.REACT_APP_TEST);
   
   return (
     <Container>
