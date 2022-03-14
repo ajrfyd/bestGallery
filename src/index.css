@@ -1,9 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #eee;
+  /* background-color: #eee; */
 }
+
+:root {
+  --font-base: 'Cormorant Upright', serif;
+
+  --color-golden: #DCCA87;
+}
+
 
 a {
   text-decoration: none;

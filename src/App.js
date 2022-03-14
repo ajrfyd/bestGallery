@@ -1,47 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from './store/test';
+import { getImg } from "./store/data";
+import Header from "./containers/Header/Header";
+import Search from "./containers/Search/Search";
+import Gallery from "./containers/Gallery/Gallery";
 
 function App() {
-  const test = useSelector(state => state.testReducer.count);
   const dispatch = useDispatch();
-
-  console.log(process.env.REACT_APP_TEST);
+  const { loading, data, error } = useSelector(state => state.dataReducer);
+  
+  useEffect(() => {
+    dispatch(getImg());
+  }, [dispatch])
   
   return (
     <Container>
-      <H1>{test}</H1>
-      <div style={{ display: "flex", justifyContent: 'space-evenly', width: '100%', backgroundColor: 'transparent' }}>
-        <Button onClick={() => dispatch(increment())}>+</Button>
-        <Button onClick={() => dispatch(decrement())}>-</Button>
-      </div>
-      <h3>{process.env.REACT_APP_TEST}</h3>
+      <Header />
+      <Search />
+      {
+        loading ? <Loading>Loading....</Loading> : <Gallery apiData={data}/>
+      }
+      {
+        error ? <Error>Error!</Error> : null
+      }
     </Container>
   )
 }
 
 export default App;
 
-// const col = 'black'
-const h = '10vh'
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  font-size: ${h};
-  background-color: #6200ee;
-  flex-direction: column;
-`
-const H1 = styled.h1`
-  background-color: transparent;
-  color: #fff;
+  min-height: 100vh;
 `
 
-const Button = styled.button`
-  width: 4rem;
-  height: 2rem;
-  border-radius: 5px;
-  outline: none;
+const Loading = styled.div`
+  display: flex;
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`
+
+const Error = styled.div`
+  display: flex;
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 `
