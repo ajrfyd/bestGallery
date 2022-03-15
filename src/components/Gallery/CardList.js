@@ -1,8 +1,12 @@
 import React from "react";
 import styled from 'styled-components';
 import Card from "./Card";
+import Loading from "../Loading/Loading";
 
-function CardList({ apiData }) {
+function CardList({ apiData, loading, error }) {
+  if(loading) {
+    return <Loading />
+  }
 
   return (
     <CardListContainer>

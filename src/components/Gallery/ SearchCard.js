@@ -1,20 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import Card from "./Card";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { searchData, getPage } from '../../store/keyword';
+import Pagination from "./Pagination";
+import Loading from "../Loading/Loading";
 
-function  SearchCard({ apiData }) {
+function  SearchCard() {
   const { loading, data, error } = useSelector(state => state.keywordReducer);
-  if(loading) return <Loading>Loading....</Loading>
-
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+  
+  // const requestPage = (page) => {
+  //   if(data) {
+  //     console.log(page)
+  //     const keyword = data.keyword;
+  //     console.log(keyword);
+  //     // reqPage(keyword)
+  //   }
+  // }
+  
+  useEffect(() => {
+    // requestPage(page)
+    if(page !== 1) {
+      reqPage()
+    }
+  }, [page])
+  
+  const reqPage = () => {
+    // console.log(page)
+    dispatch(getPage(page))
+    // dispatch(searchData(keyword, page));
+  }
+  
+  if(loading) return <Loading/>
+  if(error) {
+    console.log(error.response.status)
+  }
+  
   return (
-    <SearchCardContainer>
-      {
-        data ? data.map(item => (
-          <Card key={item.id} url={item.url} likes={item.likes}/>
-        )) : null
-      }
-    </SearchCardContainer>
+    <>
+      <SearchCardContainer>
+        {
+          data ? data.imgData.map(item => (
+            <Card key={item.id} url={item.url} likes={item.likes}/>
+          )) : null
+        }
+      </SearchCardContainer>
+      <Pagination setPage={setPage} page={page}/>
+    </>
   )
 }
 
@@ -71,10 +106,10 @@ const SearchCardContainer = styled.div`
   }
 `
 
-const Loading = styled.div`
-  display: flex;
-  font-size: 5rem;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-`
+// const Loading = styled.div`
+//   display: flex;
+//   font-size: 5rem;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+// `

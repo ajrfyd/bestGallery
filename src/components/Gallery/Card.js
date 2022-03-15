@@ -41,17 +41,16 @@ const Image = styled.img`
     opacity: .7;
     transform: scale(1.01)
   }
-
-  &:hover ~ div svg {
-    opacity: 1;
+  
+  &:hover ~ div {
+    display: flex;
   }
-  &:hover ~ div span {
-    opacity: 1;
-  }
+  
 `
 
 const Utils = styled.div`
-  display: flex;
+  /* display: flex; */
+  display: none;
   align-items: center;
   position: absolute;
   bottom: 10%;
@@ -60,12 +59,29 @@ const Utils = styled.div`
   & svg {
     cursor: pointer;
     color: #000;
-    opacity: 0;
+    /* opacity: 0; */
+    /* display: none; */
+  }
+
+  &:hover svg {
+    color: red;
   }
 `
 
 const Likes = styled.span`
   padding-top: .2rem;
   color: #000;
-  opacity: 0;
+  /* opacity: 0; */
+  /* display: none */
 `
+
+
+
+// &:hover ~ div svg {
+//   opacity: 1;
+//   /* display: block; */
+// }
+// &:hover ~ div span {
+//   opacity: 1;
+//   display: block;
+// }

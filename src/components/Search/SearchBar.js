@@ -27,13 +27,12 @@ function SearchBar({ setSearchState }) {
     }
     setKeywords([newKeyword, ...keywords])
   }
-  
+
   const deleteKeyword = (id, text) => {
     const removed = keywords.filter(keyword => keyword.id !== id);
     setKeywords(removed);
     localStorage.removeItem(text)
   }
-
 
   const search = async (e) => {
     e.preventDefault();
@@ -42,7 +41,9 @@ function SearchBar({ setSearchState }) {
       return
     }
     setOnHistory(false);
-    if(!localStorage.getItem(text)) {
+
+    const hasKeyword = keywords.find(item => item.text === text);
+    if(!hasKeyword) {
       saveKeyword(text)
     }
     dispatch(searchData(text))
@@ -59,6 +60,7 @@ function SearchBar({ setSearchState }) {
         <HomeIcon>
           <BiHome className="home" size={45} onClick={() => {
             setText('');
+            setOnHistory(false);
             setSearchState(false);
           }}/>
         </HomeIcon>

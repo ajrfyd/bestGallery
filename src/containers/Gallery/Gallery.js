@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CardList from "../../components/Gallery/CardList";
 import SearchCard from "../../components/Gallery/ SearchCard";
+import { getImg } from "../../store/data";
 
-function Gallery({ apiData, searchState, loading, error }) {
+function Gallery({ apiData, searchState }) {
+  const { loading, data, error } = useSelector(state => state.dataReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getImg());
+  }, [dispatch])
+
   if(loading) return <Loading>Loading.....</Loading>;
   if(error) return <Error>Error!!</Error>
+
+
 
   return (
     <GalleryContainer>
       {
-        searchState ? <SearchCard apiData={apiData}/> : <CardList apiData={apiData}/>
+        searchState ? <SearchCard /> : <CardList apiData={data} loading={loading} error={error}/>
       }
       {/* <CardList apiData={apiData}/> */}
     </GalleryContainer>

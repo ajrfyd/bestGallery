@@ -13,7 +13,4 @@ export default {
     })
     return arr;
   },
-  keywordSearch2() {
-    return 2;
-  }
 }

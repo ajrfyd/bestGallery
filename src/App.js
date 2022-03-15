@@ -1,33 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from 'react-redux';
-import { getImg } from "./store/data";
 import Header from "./containers/Header/Header";
 import Search from "./containers/Search/Search";
 import Gallery from "./containers/Gallery/Gallery";
 
 function App() {
-  const dispatch = useDispatch();
-  const { loading, data, error } = useSelector(state => state.dataReducer);
   const [searchState, setSearchState] = useState(false);
-  
-  useEffect(() => {
-    dispatch(getImg());
-  }, [dispatch])
-  
+  // searchState의 값에 따라 메인 화면과 검색결과 화면의 전환이 이루어짐.
+
   return (
     <Container>
       <Header />
       <Search setSearchState={setSearchState} />
-      {/* {
-        loading ? <Loading>Loading....</Loading> : <Gallery apiData={data} loading={loading} error={error}/>
-      } */}
-      <Gallery 
-        apiData={data} 
-        loading={loading} 
-        error={error} 
-        searchState={searchState}
-      />
+      <Gallery searchState={searchState} />
     </Container>
   )
 }

@@ -6,6 +6,10 @@ const GET_DATA = 'keyword/GET_DATA';
 const GET_DATA_SUCCESS = 'keyword/GET_DATA_SUCCESS';
 const GET_DATA_ERROR = 'keyword/GET_DATA_ERROR';
 
+const GET_PAGE = 'keyword/GET_PAGE';
+const GET_PAGE_SUCCESS = 'keyword/GET_PAGE_SUCCESS';
+const GET_PAGE_ERROR = 'keyword/GET_PAGE_ERROR';
+
 export const searchData = (key, page = 1) => async dispatch => {
   const history = localStorage.getItem(key + page);
   if(history) {
@@ -14,22 +18,74 @@ export const searchData = (key, page = 1) => async dispatch => {
     
     return 
   }
+
   dispatch({ type: GET_DATA });
   
   try {
     const API = `https://api.unsplash.com/search/photos?page=${page}&query=${key}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`
     const { data } = await axios.get(API);
-    const payload = utils.keywordSearch(data);
 
-    localStorage.setItem(key + page, JSON.stringify(payload));
-    console.log(payload)
+    if(data) {
+      const imgData = utils.keywordSearch(data);
+      console.log('why did not working???????')
 
-    dispatch({ type: GET_DATA_SUCCESS, payload });
+      const payload = {
+        keyword : key,
+        imgData,
+        page
+      }
+
+      localStorage.setItem(key + page, JSON.stringify(payload));
+  
+      dispatch({ type: GET_DATA_SUCCESS, payload });
+    }
 
   } catch(e) {
     const payload = e;
     dispatch({ type: GET_DATA_ERROR, payload });
   }
+}
+
+export const getPage = (page) => async (dispatch, getState) => {
+  const { keywordReducer } = getState();
+  const { keyword } = keywordReducer.data;
+
+  const history = localStorage.getItem(keyword + page);
+  if(history) {
+    const payload = JSON.parse(history);
+    dispatch({ type: GET_DATA_SUCCESS, payload })    
+    return 
+  }
+  
+  dispatch({ type: GET_DATA });
+  
+
+  try {
+    const API = `https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+    const { data } = await axios.get(API);
+
+    if(data) {
+      const imgData = utils.keywordSearch(data);
+      console.log('why did not working???????')
+
+      const payload = {
+        keyword : keyword,
+        imgData,
+        page
+      }
+
+      localStorage.setItem(keyword + page, JSON.stringify(payload));
+  
+      dispatch({ type: GET_DATA_SUCCESS, payload });
+    }
+
+  } catch(e) {
+    const payload = e;
+    dispatch({ type: GET_DATA_ERROR, payload });
+  }
+
+
+  // dispatch({ type: GET_PAGE });
 }
 
 const initialState = {
@@ -59,6 +115,11 @@ export default function keywordReducer(state = initialState, action) {
         loading: false,
         error: action.payload,
         data: null
+      }
+    case GET_PAGE:
+      return {
+        ...state, 
+        loading: true,
       }
     default:
       return state;
