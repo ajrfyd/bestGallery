@@ -1,6 +1,5 @@
 import axios from "axios";
 // const API = 'http://127.0.0.1:4000/dataTen3';
-// const API = 'https://api.unsplash.com/photos/?client_id=-gudpWJDM9en_ZUYaqAw8BAQ9V2fUDUvezHM9JxAhcI'
 const API = `https://api.unsplash.com/photos/random/?client_id=${process.env.REACT_APP_ACCESS_KEY}&count=30`
 
 const REQ_DATA = 'images/REQ_DATA';

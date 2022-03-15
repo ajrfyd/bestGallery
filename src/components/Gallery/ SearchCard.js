@@ -1,26 +1,29 @@
 import React from "react";
 import styled from 'styled-components';
 import Card from "./Card";
+import { useSelector } from 'react-redux';
 
-function CardList({ apiData }) {
+function  SearchCard({ apiData }) {
+  const { loading, data, error } = useSelector(state => state.keywordReducer);
+  if(loading) return <Loading>Loading....</Loading>
 
   return (
-    <CardListContainer>
+    <SearchCardContainer>
       {
-        apiData ? apiData.map(data => (
-          <Card key={data.id} url={data.urls.thumb} likes={data.likes}/>
+        data ? data.map(item => (
+          <Card key={item.id} url={item.url} likes={item.likes}/>
         )) : null
       }
-    </CardListContainer>
+    </SearchCardContainer>
   )
 }
 
-export default CardList;
+export default  SearchCard;
 
+const SearchCardContainer = styled.div`
+  /* display: grid;
+  grid-template-columns: repeat(5, 1fr); */
 
-const CardListContainer = styled.div`
-  line-height: 0;
-  
   @media (max-width: 2000px) {
     -webkit-column-count: 5;
     -webkit-column-gap: 0;
@@ -68,3 +71,10 @@ const CardListContainer = styled.div`
   }
 `
 
+const Loading = styled.div`
+  display: flex;
+  font-size: 5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+`

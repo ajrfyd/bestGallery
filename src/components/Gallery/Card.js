@@ -12,7 +12,7 @@ function Card({ url, likes }) {
         <Image src={url} alt='Image'/>
         <Utils>
           <FaRegThumbsUp />
-          <span style={{ paddingTop: '.2rem'}}>: {likes}</span>
+          <Likes >: {likes}</Likes>
         </Utils>
       </ImgContainer>
     </CardContainer>
@@ -20,42 +20,52 @@ function Card({ url, likes }) {
 }
 
 export default Card;
-
 const CardContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: auto;
   margin-bottom: .5rem;
-`
-const ImgContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  `
 
-  @media (max-width: 440px) {
-    width: 100%;
-  }
+const ImgContainer = styled.div`
+  position: relative;
+  break-inside: avoid;
+  /* overflow: hidden; */
 `
 
 const Image = styled.img`
   border-radius: 5px;
-  object-fit: cover;
-  margin-bottom: .5rem;
-/* 
-  @media (max-width: 440px){
-    width: 150%;
-  } */
+  box-shadow: 0 8px 20px -15px #000;
+  line-height: 0;
 
   &:hover {
     opacity: .7;
     transform: scale(1.01)
+  }
+
+  &:hover ~ div svg {
+    opacity: 1;
+  }
+  &:hover ~ div span {
+    opacity: 1;
   }
 `
 
 const Utils = styled.div`
   display: flex;
   align-items: center;
+  position: absolute;
+  bottom: 10%;
+  right: 30px;
 
   & svg {
     cursor: pointer;
+    color: #000;
+    opacity: 0;
   }
+`
+
+const Likes = styled.span`
+  padding-top: .2rem;
+  color: #000;
+  opacity: 0;
 `
