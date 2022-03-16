@@ -8,31 +8,29 @@ import Pagination from "./Pagination";
 import Loading from "../Loading/Loading";
 
 function  SearchCard() {
-  const { loading, data, error } = useSelector(state => state.keywordReducer);
-  const [page, setPage] = useState(1);
+  const { loading, data, error, pageNum, keyword } = useSelector(state => state.keywordReducer);
+  // const [page, setPage] = useState(1);
+  const [info, setInfo] = useState([]);
+
+  console.log(info)
   const dispatch = useDispatch();
   
-  // const requestPage = (page) => {
-  //   if(data) {
-  //     console.log(page)
-  //     const keyword = data.keyword;
-  //     console.log(keyword);
-  //     // reqPage(keyword)
-  //   }
-  // }
-  
-  useEffect(() => {
-    // requestPage(page)
-    if(page !== 1) {
-      reqPage()
-    }
-  }, [page])
-  
-  const reqPage = () => {
-    // console.log(page)
-    dispatch(getPage(page))
-    // dispatch(searchData(keyword, page));
+  const requestPage = (page) => {
+    console.log(page, keyword, '----------------')
+    dispatch(searchData(keyword, page))
   }
+
+  // useEffect(() => {
+  //   if(page !== 1) {
+  //     reqPage()
+  //   }
+  // }, [page])
+  
+  // const reqPage = () => {
+  //   console.log(page)
+  //   dispatch(getPage(page))
+  //   // dispatch(searchData(keyword, page));
+  // }
   
   if(loading) return <Loading/>
   if(error) {
@@ -48,7 +46,7 @@ function  SearchCard() {
           )) : null
         }
       </SearchCardContainer>
-      <Pagination setPage={setPage} page={page}/>
+      <Pagination page={pageNum} requestPage={requestPage}/>
     </>
   )
 }

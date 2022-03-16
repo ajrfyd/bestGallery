@@ -11,6 +11,7 @@ const GET_PAGE_SUCCESS = 'keyword/GET_PAGE_SUCCESS';
 const GET_PAGE_ERROR = 'keyword/GET_PAGE_ERROR';
 
 export const searchData = (key, page = 1) => async dispatch => {
+  console.log(page, '112512451245125123')
   const history = localStorage.getItem(key + page);
   if(history) {
     const payload = JSON.parse(history);
@@ -27,7 +28,7 @@ export const searchData = (key, page = 1) => async dispatch => {
 
     if(data) {
       const imgData = utils.keywordSearch(data);
-      console.log('why did not working???????')
+      console.log(page, 'why did not working???????')
 
       const payload = {
         keyword : key,
@@ -91,6 +92,8 @@ export const getPage = (page) => async (dispatch, getState) => {
 const initialState = {
   loading: false,
   data: null,
+  pageNum: 1,
+  keyword: null,
   error: null
 };
 
@@ -101,25 +104,28 @@ export default function keywordReducer(state = initialState, action) {
         ...state,
         loading: true,
         error: null,
-        data: null
+        data: null,
+        keyword: null,
       }
     case GET_DATA_SUCCESS:
       return {
         ...state, 
         loading: false,
-        data: action.payload
+        data: action.payload,
+        pageNum: action.payload.page,
+        keyword: action.payload.keyword
       }
     case GET_DATA_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
-        data: null
+        data: null,
+        keyword: null,
       }
     case GET_PAGE:
       return {
         ...state, 
-        loading: true,
       }
     default:
       return state;
