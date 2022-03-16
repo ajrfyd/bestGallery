@@ -5,12 +5,8 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 
 function Pagination({ page, setPage, requestPage }) {
-  // useEffect(() => {
-  //   setPage(1);
-  // }, [])
 
   const pageHandler = (num) => {
-    console.log(page, '@@@@@@@@@@@@@@@@@@@@@@@@@@')
     if(num === 1) {
       requestPage(page + 1)
     } else if(num === -1 && page !== 1) {

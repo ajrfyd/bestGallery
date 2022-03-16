@@ -38,8 +38,6 @@ function App() {
     
   }, [])
   
-  console.log(userInfo);
-
   return (
     <Container>
       <Header userInfo={userInfo} setUserInfo={setUserInfo}/>

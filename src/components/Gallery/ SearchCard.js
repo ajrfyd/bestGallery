@@ -19,17 +19,6 @@ function  SearchCard() {
     dispatch(searchData(keyword, page))
   }
 
-  // useEffect(() => {
-  //   if(page !== 1) {
-  //     reqPage()
-  //   }
-  // }, [page])
-  
-  // const reqPage = () => {
-  //   console.log(page)
-  //   dispatch(getPage(page))
-  //   // dispatch(searchData(keyword, page));
-  // }
   
   if(loading) return <Loading/>
   if(error) {

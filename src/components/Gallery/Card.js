@@ -1,16 +1,33 @@
 import React from "react";
 import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
-
+import axios from "axios";
 
 function Card({ url, likes, id }) {
   
+  // 테스트중 
+  const reqLikes = async () => {
+    // const token = localStorage.getItem('access_token');
+    // if(token) {
+    //   const url = `https://api.unsplash.com/photos/${id}/like`
+    //   console.log(token);
+    //   const res = await axios.post(url, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: `Bearer ${token}`
+    //     },
+    //     withCredentials: true,
+    //   })
+    //   console.log(res);
+    // }
+  }
+
   return (
     <CardContainer>
       <ImgContainer>
         <Image src={url} alt='Image'/>
         <Utils>
-          <FaRegThumbsUp />
+          <FaRegThumbsUp onClick={() => reqLikes()}/>
           <Likes > &times; {likes}</Likes>
         </Utils>
       </ImgContainer>
@@ -71,6 +88,11 @@ const Utils = styled.div`
   & svg:hover ~ span
   {
     color: red;
+  }
+
+  & svg:active {
+    transform: scale(1.1);
+    color: #6200ee;
   }
 `
 
