@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   keywordSearch(data) {
     const { results } = data;
@@ -13,4 +15,20 @@ export default {
     })
     return arr;
   },
+  async getAccessToken(code) {
+    const url = `https://unsplash.com/oauth/token`
+    const res = await axios.post(url, 
+      {
+        client_id: `${process.env.REACT_APP_ACCESS_KEY}`,
+        client_secret: `${process.env.REACT_APP_SECRET_KEY}`,
+        redirect_uri: `${process.env.NODE_ENV ==='development' ? 'http://localhost:3000' : 'https://best-gallery.vercel.app'}`,
+        code: `${code}`,
+        grant_type: 'authorization_code'
+      }
+    )
+    if(res) {
+      const data = res.data;
+      return data;
+    }
+  }
 }

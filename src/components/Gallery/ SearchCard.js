@@ -16,7 +16,6 @@ function  SearchCard() {
   const dispatch = useDispatch();
   
   const requestPage = (page) => {
-    console.log(page, keyword, '----------------')
     dispatch(searchData(keyword, page))
   }
 
@@ -104,10 +103,3 @@ const SearchCardContainer = styled.div`
   }
 `
 
-// const Loading = styled.div`
-//   display: flex;
-//   font-size: 5rem;
-//   justify-content: center;
-//   align-items: center;
-//   min-height: 100vh;
-// `

@@ -3,16 +3,15 @@ import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 
 
-
-function Card({ url, likes }) {
-
+function Card({ url, likes, id }) {
+  
   return (
     <CardContainer>
       <ImgContainer>
         <Image src={url} alt='Image'/>
         <Utils>
           <FaRegThumbsUp />
-          <Likes >: {likes}</Likes>
+          <Likes > &times; {likes}</Likes>
         </Utils>
       </ImgContainer>
     </CardContainer>
@@ -30,6 +29,10 @@ const ImgContainer = styled.div`
   position: relative;
   break-inside: avoid;
   /* overflow: hidden; */
+  
+  &:hover div {
+    display: block;
+  }
 `
 
 const Image = styled.img`
@@ -37,14 +40,14 @@ const Image = styled.img`
   box-shadow: 0 8px 20px -15px #000;
   line-height: 0;
 
-  &:hover {
+  /* &:hover {
     opacity: .7;
     transform: scale(1.01)
-  }
+  } */
   
-  &:hover ~ div {
+  /* &:hover ~ div {
     display: flex;
-  }
+  } */
   
 `
 
@@ -53,24 +56,27 @@ const Utils = styled.div`
   display: none;
   align-items: center;
   position: absolute;
-  bottom: 10%;
+  bottom: 10px;
   right: 30px;
+  font-size: 1.5rem;
 
   & svg {
     cursor: pointer;
-    color: #000;
+    color: blue;
     /* opacity: 0; */
     /* display: none; */
   }
 
-  &:hover svg {
+  & svg:hover,
+  & svg:hover ~ span
+  {
     color: red;
   }
 `
 
 const Likes = styled.span`
   padding-top: .2rem;
-  color: #000;
+  color: #fff;
   /* opacity: 0; */
   /* display: none */
 `

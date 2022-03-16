@@ -1,19 +1,29 @@
 import React from "react";
 import styled from 'styled-components';
+import axios from "axios";
 
+function LoginBtn({ userInfo, setUserInfo }) {
+  const URL = `https://unsplash.com/oauth/authorize?client_id=${process.env.REACT_APP_ACCESS_KEY}&redirect_uri=${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://best-gallery.vercel.app'}&response_type=code&scope=public+read_user+write_likes`;
 
-function LoginBtn() {
+  const logoutHandler = () => {
+    localStorage.removeItem('access_token');
+    setUserInfo({
+      isLogin: false,
+      accessToken: ''
+    })
+  }
 
   return (
-    <Btn>
-      LogIn
+    <Btn >
+      { !userInfo.isLogin && <a href={URL}>LogIn</a> }
+      { userInfo.isLogin && <a onClick={() => logoutHandler()}>LogOut</a> }
     </Btn>
   )
 }
 
 export default LoginBtn;
 
-const Btn = styled.button`
+const Btn = styled.div`
   width: max-content;
   height: 80%;
   font-size: 2rem;

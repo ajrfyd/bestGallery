@@ -12,7 +12,7 @@ function CardList({ apiData, loading, error }) {
     <CardListContainer>
       {
         apiData ? apiData.map(data => (
-          <Card key={data.id} url={data.urls.thumb} likes={data.likes}/>
+          <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
         )) : null
       }
     </CardListContainer>

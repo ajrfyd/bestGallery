@@ -3,12 +3,12 @@ import Logo from "../../components/Header/Logo";
 import LoginBtn from "../../components/Header/LoginBtn";
 import styled from 'styled-components';
 
-function Header() {
+function Header({ userInfo, setUserInfo }) {
 
   return (
     <HeaderContainer>
       <Logo />
-      <LoginBtn />
+      <LoginBtn userInfo={userInfo} setUserInfo={setUserInfo}/>
     </HeaderContainer>
   )
 }
