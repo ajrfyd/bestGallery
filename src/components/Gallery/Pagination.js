@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 
-
+// TODO: use arrow functions
 function Pagination({ page, setPage, requestPage }) {
 
   const pageHandler = (num) => {
@@ -16,6 +16,7 @@ function Pagination({ page, setPage, requestPage }) {
 
 
   return (
+    // TODO: use button tag
     <ArrowBox>
       <IoIosArrowBack onClick={() => pageHandler(-1)}/>
       <IoIosArrowForward onClick={() => pageHandler(1)}/>

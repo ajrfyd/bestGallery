@@ -3,6 +3,7 @@ import Logo from "../../components/Header/Logo";
 import LoginBtn from "../../components/Header/LoginBtn";
 import styled from 'styled-components';
 
+// TODO: use arrow function
 function Header({ userInfo, setUserInfo }) {
 
   return (

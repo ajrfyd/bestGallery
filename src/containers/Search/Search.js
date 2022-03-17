@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import SearchBar from "../../components/Search/SearchBar";
 
+// TODO: use arrow function
 function Search({ setSearchState }) {
 
   return (
