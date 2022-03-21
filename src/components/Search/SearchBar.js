@@ -8,6 +8,8 @@ import History from "./History";
 // 로컬스토리지 -> 기간 설정, 
 // 스토리지 삭제
 
+// TODO: use arrow functions
+// TODO: use variable name starts with 'is' for boolean types
 function SearchBar({ setSearchState }) {
   const [text, setText] = useState('');
   const [onHistory, setOnHistory] = useState(false);
@@ -15,10 +17,12 @@ function SearchBar({ setSearchState }) {
   const inputRef = useRef();
 
   const [keywords, setKeywords] = useState(
+    // TODO: use try / catch block
     JSON.parse(localStorage.getItem('keywords') || '[]'),
   )
 
   useEffect(() => {
+    // TODO: use try / catch block
     localStorage.setItem('keywords', JSON.stringify(keywords))
   }, [keywords])
 
@@ -34,6 +38,7 @@ function SearchBar({ setSearchState }) {
   const deleteKeyword = (id, text) => {
     const removed = keywords.filter(keyword => keyword.id !== id);
     setKeywords(removed);
+    // TODO: setItem 없이 removeItem 만 호출하는 이유 확인
     localStorage.removeItem(text)
   }
 
@@ -68,6 +73,7 @@ function SearchBar({ setSearchState }) {
           }}/>
         </HomeIcon>
         <Input placeholder="Search" value={text} onChange={getText} onClick={() => setOnHistory(true)} ref={inputRef}/>
+        {/* TODO: use button tag */}
         <SearchIcon>
           <BiSearchAlt2 size={50} onClick={search}/>
         </SearchIcon>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Card from "./Card";
 import Loading from "../Loading/Loading";
 
+// TODO: use arrow functions
 function CardList({ apiData, loading, error }) {
   if(loading) {
     return <Loading />

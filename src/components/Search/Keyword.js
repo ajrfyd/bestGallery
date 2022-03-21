@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import { AiOutlineDelete } from 'react-icons/ai';
 
-
+// TODO: use arrow function
 function Keyword({ text, id, deleteKeyword, setText, inputRef }) {
 
   return (

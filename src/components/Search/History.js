@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Keyword from "./Keyword";
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-
+// TODO: use arrow functions
 function History({ setOnHistory, keywords, deleteKeyword, setText, inputRef }) {
   return (
     <HistoryContainer>

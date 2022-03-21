@@ -10,10 +10,12 @@ const GET_PAGE = 'keyword/GET_PAGE';
 const GET_PAGE_SUCCESS = 'keyword/GET_PAGE_SUCCESS';
 const GET_PAGE_ERROR = 'keyword/GET_PAGE_ERROR';
 
+// TODO: use semi-colon
 export const searchData = (key, page = 1) => async dispatch => {
   console.log(page, '112512451245125123')
   const history = localStorage.getItem(key + page);
   if(history) {
+    // TODO: use try / catch block
     const payload = JSON.parse(history);
     dispatch({ type: GET_DATA_SUCCESS, payload })
     
@@ -53,6 +55,7 @@ export const getPage = (page) => async (dispatch, getState) => {
 
   const history = localStorage.getItem(keyword + page);
   if(history) {
+    // TODO: use try / catch block
     const payload = JSON.parse(history);
     dispatch({ type: GET_DATA_SUCCESS, payload })    
     return 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default {
+  // TODO: use Array.prototype.map()
   keywordSearch(data) {
     const { results } = data;
     const arr = [];
@@ -15,6 +16,7 @@ export default {
     })
     return arr;
   },
+  // TODO: use try / catch block
   async getAccessToken(code) {
     const url = `https://unsplash.com/oauth/token`
     const res = await axios.post(url, 

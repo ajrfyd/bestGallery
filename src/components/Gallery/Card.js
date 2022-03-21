@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
 
+// TODO: use arrow functions
 function Card({ url, likes, id }) {
   
   // 테스트중 
@@ -27,6 +28,7 @@ function Card({ url, likes, id }) {
       <ImgContainer>
         <Image src={url} alt='Image'/>
         <Utils>
+          {/* TODO: use button tag */}
           <FaRegThumbsUp onClick={() => reqLikes()}/>
           <Likes > &times; {likes}</Likes>
         </Utils>

@@ -1,5 +1,6 @@
 import axios from "axios";
 // const API = 'http://127.0.0.1:4000/dataTen3';
+// TODO: make count query param dynamic for responsive design
 const API = `https://api.unsplash.com/photos/random/?client_id=${process.env.REACT_APP_ACCESS_KEY}&count=30`
 
 const REQ_DATA = 'images/REQ_DATA';
@@ -18,6 +19,7 @@ export const getImg = () => async dispatch => {
   const localData = localStorage.getItem('data');
   if(localData) {
     console.log('Request to Local')
+    // TODO: use try / catch block
     const payload = JSON.parse(localData);
     dispatch({ type: REQ_DATA_SUCCESS, payload })
     return
