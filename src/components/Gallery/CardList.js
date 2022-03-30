@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Card from "./Card";
 import Loading from "../Loading/Loading";
 
-function CardList({ apiData, loading, error }) {
+const CardList = ({ apiData, loading, error }) => {
   if(loading) {
     return <Loading />
   }

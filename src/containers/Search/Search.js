@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import SearchBar from "../../components/Search/SearchBar";
 
-function Search({ setSearchState }) {
+const Search = ({ setSearchState }) => {
 
   return (
     <SearchContainer>

@@ -7,7 +7,7 @@ import { searchData, getPage } from '../../store/keyword';
 import Pagination from "./Pagination";
 import Loading from "../Loading/Loading";
 
-function  SearchCard() {
+const SearchCard = () => {
   const { loading, data, error, pageNum, keyword } = useSelector(state => state.keywordReducer);
   // const [page, setPage] = useState(1);
   const [info, setInfo] = useState([]);

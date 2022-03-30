@@ -5,13 +5,15 @@ import Search from "./containers/Search/Search";
 import Gallery from "./containers/Gallery/Gallery";
 import utils from './utils';
 
-function App() {
+const App = () => {
   const [searchState, setSearchState] = useState(false);
   // searchState의 값에 따라 메인 화면과 검색결과 화면의 전환이 이루어짐.
   const [userInfo, setUserInfo] = useState({
     isLogin: false,
     accessToken: ''
-  })
+  });
+
+  const fetchMoreEl = useRef(null);
 
   useEffect(async() => {
     const url = new URL(window.location.href);
@@ -43,6 +45,7 @@ function App() {
       <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
       <Search setSearchState={setSearchState} />
       <Gallery searchState={searchState} />
+      <div ref={fetchMoreEl}/>
     </Container>
   )
 }

@@ -4,7 +4,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 
 
-function Pagination({ page, setPage, requestPage }) {
+const Pagination = ({ page, setPage, requestPage }) => {
 
   const pageHandler = (num) => {
     if(num === 1) {

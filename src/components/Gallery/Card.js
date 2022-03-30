@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
 
-function Card({ url, likes, id }) {
+const Card = ({ url, likes, id }) => {
   
   // 테스트중 
   const reqLikes = async () => {
@@ -20,12 +20,13 @@ function Card({ url, likes, id }) {
     //   })
     //   console.log(res);
     // }
+    console.log('asdasd')
   }
 
   return (
     <CardContainer>
       <ImgContainer>
-        <Image src={url} alt='Image'/>
+        <Image src={url} alt='Image' onClick={() => console.log('gi?')}/>
         <Utils>
           <FaRegThumbsUp onClick={() => reqLikes()}/>
           <Likes > &times; {likes}</Likes>

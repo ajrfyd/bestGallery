@@ -5,7 +5,7 @@ import CardList from "../../components/Gallery/CardList";
 import SearchCard from "../../components/Gallery/ SearchCard";
 import { getImg } from "../../store/data";
 
-function Gallery({ apiData, searchState }) {
+const Gallery = ({ apiData, searchState }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
   const dispatch = useDispatch();
 

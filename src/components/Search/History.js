@@ -4,7 +4,7 @@ import Keyword from "./Keyword";
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 
-function History({ setOnHistory, keywords, deleteKeyword, setText, inputRef }) {
+const History = ({ setOnHistory, keywords, deleteKeyword, setText, inputRef }) => {
   return (
     <HistoryContainer>
       <Header>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 
-function Keyword({ text, id, deleteKeyword, setText, inputRef }) {
+const Keyword = ({ text, id, deleteKeyword, setText, inputRef }) => {
 
   return (
     <KeywordContainer>

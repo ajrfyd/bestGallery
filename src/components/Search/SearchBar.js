@@ -8,7 +8,7 @@ import History from "./History";
 // 로컬스토리지 -> 기간 설정, 
 // 스토리지 삭제
 
-function SearchBar({ setSearchState }) {
+const SearchBar = ({ setSearchState }) => {
   const [text, setText] = useState('');
   const [onHistory, setOnHistory] = useState(false);
   const dispatch = useDispatch();

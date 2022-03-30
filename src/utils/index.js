@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 export default {
   keywordSearch(data) {
@@ -30,5 +31,26 @@ export default {
       const data = res.data;
       return data;
     }
-  }
+  },
+  useInfiniteScroll(targetEl) {
+    const observerRef = useRef(null);
+    const [intersecting, setIntersecting] = useState(false);
+
+    const getObserver = useCallback(() => {
+      if(!observerRef.current) {
+        observerRef.current = new IntersectionObserver(entries => setIntersecting(entries.some(entry => entry.intersecting)));
+      } 
+      return observerRef.current
+    }, [observerRef.current]);
+
+    useEffect(() => {
+      if(targetEl.current) getObserver().observe(targetEl.current);
+
+      return () => {
+        getObserver().disconnect();
+      }
+    }, [targetEl.current])
+
+    return intersecting;
+  } 
 }

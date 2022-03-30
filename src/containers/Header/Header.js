@@ -3,7 +3,7 @@ import Logo from "../../components/Header/Logo";
 import LoginBtn from "../../components/Header/LoginBtn";
 import styled from 'styled-components';
 
-function Header({ userInfo, setUserInfo }) {
+const Header = ({ userInfo, setUserInfo }) => {
 
   return (
     <HeaderContainer>
