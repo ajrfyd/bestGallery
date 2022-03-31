@@ -1,17 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CardList from "../../components/Gallery/CardList";
 import SearchCard from "../../components/Gallery/ SearchCard";
-import { getImg } from "../../store/data";
+import { getImgs } from "../../store/data";
+import utils from "../../utils";
 
 const Gallery = ({ apiData, searchState }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
   const dispatch = useDispatch();
+  
+  const [hasNext, setHasNext] = useState(true);
+  const getMoreImgEl = useRef(null);
+  const intersecting = utils.useInfiniteScroll(getMoreImgEl);
 
   useEffect(() => {
-    dispatch(getImg());
-  }, [dispatch])
+    if(intersecting && hasNext) {
+      dispatch(getImgs());
+    }
+  }, [dispatch, intersecting])
+
+  // useEffect(() => {
+  //   if(intersecting) {
+  //     // TODO: Gallery에서 시도해 보자!
+  //   }
+  // }, []) 
 
   if(loading) return <Loading>Loading.....</Loading>;
   if(error) return <Error>Error!!</Error>
@@ -19,12 +32,15 @@ const Gallery = ({ apiData, searchState }) => {
 
 
   return (
-    <GalleryContainer>
-      {
-        searchState ? <SearchCard /> : <CardList apiData={data} loading={loading} error={error}/>
-      }
-      {/* <CardList apiData={apiData}/> */}
-    </GalleryContainer>
+      <GalleryContainer>
+        {
+          searchState ? <SearchCard /> : <CardList apiData={data} loading={loading} error={error}/>
+        }
+        {
+          !searchState && <div ref={getMoreImgEl}/>
+        }
+        {/* <div ref={getMoreImgEl}/> */}
+      </GalleryContainer>
   )
 }
 

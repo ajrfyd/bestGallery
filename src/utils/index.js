@@ -38,7 +38,7 @@ export default {
 
     const getObserver = useCallback(() => {
       if(!observerRef.current) {
-        observerRef.current = new IntersectionObserver(entries => setIntersecting(entries.some(entry => entry.intersecting)));
+        observerRef.current = new IntersectionObserver(entries => setIntersecting(entries.some(entry => entry.isIntersecting)));
       } 
       return observerRef.current
     }, [observerRef.current]);

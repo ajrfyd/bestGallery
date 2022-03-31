@@ -13,20 +13,31 @@ const App = () => {
     accessToken: ''
   });
 
-  const fetchMoreEl = useRef(null);
 
-  useEffect(async() => {
+  const getToken = async (authorizationCode) => {
+    const { access_token } = await utils.getAccessToken(authorizationCode);
+    setUserInfo({
+      ...userInfo,
+      isLogin: true,
+      accessToken: access_token
+    })
+    localStorage.setItem('access_token', access_token);
+    window.history.replaceState({}, null, window.location.pathname)
+  }
+
+  useEffect(() => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     if(authorizationCode) {
-      const { access_token } = await utils.getAccessToken(authorizationCode);
-      setUserInfo({
-        ...userInfo,
-        isLogin: true,
-        accessToken: access_token
-      })
-      localStorage.setItem('access_token', access_token);
-      window.history.replaceState({}, null, window.location.pathname)
+      // const { access_token } = await utils.getAccessToken(authorizationCode);
+      // setUserInfo({
+      //   ...userInfo,
+      //   isLogin: true,
+      //   accessToken: access_token
+      // })
+      // localStorage.setItem('access_token', access_token);
+      // window.history.replaceState({}, null, window.location.pathname)
+      getToken(authorizationCode)
       return
     }
     const token = localStorage.getItem('access_token');
@@ -39,13 +50,12 @@ const App = () => {
     }
     
   }, [])
-  
+
   return (
     <Container>
       <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
       <Search setSearchState={setSearchState} />
       <Gallery searchState={searchState} />
-      <div ref={fetchMoreEl}/>
     </Container>
   )
 }

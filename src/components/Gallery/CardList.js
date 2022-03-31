@@ -3,19 +3,25 @@ import styled from 'styled-components';
 import Card from "./Card";
 import Loading from "../Loading/Loading";
 
+
+
 const CardList = ({ apiData, loading, error }) => {
   if(loading) {
     return <Loading />
   }
 
+
+
   return (
-    <CardListContainer>
-      {
-        apiData ? apiData.map(data => (
-          <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
-        )) : null
-      }
-    </CardListContainer>
+    <>
+      <CardListContainer>
+        {
+          apiData ? apiData.map(data => (
+            <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
+          )) : null
+        }
+      </CardListContainer>
+    </>
   )
 }
 
