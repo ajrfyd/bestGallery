@@ -4,6 +4,8 @@ import Header from "./containers/Header/Header";
 import Search from "./containers/Search/Search";
 import Gallery from "./containers/Gallery/Gallery";
 import utils from './utils';
+import Loading from "./components/Loading/Loading";
+
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -13,9 +15,9 @@ const App = () => {
     accessToken: ''
   });
 
-
   const getToken = async (authorizationCode) => {
     const { access_token } = await utils.getAccessToken(authorizationCode);
+    if(!access_token) return
     setUserInfo({
       ...userInfo,
       isLogin: true,
@@ -28,25 +30,20 @@ const App = () => {
   useEffect(() => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
-    if(authorizationCode) {
-      // const { access_token } = await utils.getAccessToken(authorizationCode);
-      // setUserInfo({
-      //   ...userInfo,
-      //   isLogin: true,
-      //   accessToken: access_token
-      // })
-      // localStorage.setItem('access_token', access_token);
-      // window.history.replaceState({}, null, window.location.pathname)
-      getToken(authorizationCode)
-      return
-    }
     const token = localStorage.getItem('access_token');
+
     if(token) {
       setUserInfo({
         ...userInfo,
         isLogin: true,
         accessToken: token
       })
+      return;
+    }
+    if(!authorizationCode && !token) return
+    if(authorizationCode) {
+      getToken(authorizationCode)
+      return
     }
     
   }, [])
@@ -56,6 +53,7 @@ const App = () => {
       <Header userInfo={userInfo} setUserInfo={setUserInfo}/>
       <Search setSearchState={setSearchState} />
       <Gallery searchState={searchState} />
+      {/* <Loading /> */}
     </Container>
   )
 }

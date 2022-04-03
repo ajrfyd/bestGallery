@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from 'styled-components';
 import Card from "./Card";
 import Loading from "../Loading/Loading";
 
+import useInfiniteScroll from "../../utils/useInfiniteScroll";
+
 
 
 const CardList = ({ apiData, loading, error }) => {
+  const getMoreImgEl = useRef(null);
+  const intersecting = useInfiniteScroll(getMoreImgEl);
+
+  // useEffect(() => {
+  //   if(intersecting) {
+  //     console.log('hi')
+  //   }
+  // }, [intersecting])
+
   if(loading) {
     return <Loading />
   }
@@ -21,6 +32,7 @@ const CardList = ({ apiData, loading, error }) => {
           )) : null
         }
       </CardListContainer>
+      {/* <div ref={getMoreImgEl}/> */}
     </>
   )
 }

@@ -29,6 +29,7 @@ export default {
     )
     if(res) {
       const data = res.data;
+      console.log(data)
       return data;
     }
   },

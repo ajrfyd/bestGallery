@@ -5,28 +5,61 @@ import CardList from "../../components/Gallery/CardList";
 import SearchCard from "../../components/Gallery/ SearchCard";
 import { getImgs } from "../../store/data";
 import utils from "../../utils";
+import useInfiniteScroll from "../../utils/useInfiniteScroll";
+import Loading from "../../components/Loading/Loading";
 
 const Gallery = ({ apiData, searchState }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
   const dispatch = useDispatch();
-  
-  const [hasNext, setHasNext] = useState(true);
+  // const [hasNext, setHasNext] = useState(true);
   const getMoreImgEl = useRef(null);
-  const intersecting = utils.useInfiniteScroll(getMoreImgEl);
+  const intersecting = useInfiniteScroll(getMoreImgEl);
+  const [page, setPage] = useState(1);
+  // console.log(page)
+  // const localData = localStorage.getItem('data');
+  // const [isFetching, setIsFetching] = useState(false);
+  //!
 
-  useEffect(() => {
-    if(intersecting && hasNext) {
-      dispatch(getImgs());
-    }
-  }, [dispatch, intersecting])
+  // const getMoreImgEl = useRef(null); 	//observer Element
+
+  // const preventRef = useRef(true); //옵저버 중복 실행 방지
+  // const endRef = useRef(false); //모든 글 로드 확인
+
+
+  // useEffect(()=> { //옵저버 생성
+  //     const observer = new IntersectionObserver(obsHandler, { threshold : 0.5 });
+  //     if(getMoreImgEl.current) observer.observe(getMoreImgEl.current);
+  //     return () => { observer.disconnect(); }
+  // }, [])
+
 
   // useEffect(() => {
-  //   if(intersecting) {
-  //     // TODO: Gallery에서 시도해 보자!
+  //   setIsFetching(true);
+  //   if(intersecting && hasNext && isFetching) {
+  //     dispatch(getImgs());
   //   }
-  // }, []) 
+  //   setIsFetching(false)
+  // }, [dispatch, intersecting, hasNext])
 
-  if(loading) return <Loading>Loading.....</Loading>;
+  useEffect(()=> {
+    dispatch(getImgs(page));
+    setPage(page => page + 1);
+  }, [dispatch, intersecting])
+  // useEffect(() => {
+  //   if(localData) return;
+  // }, [])
+
+
+  // const obsHandler = ((entries) => { //옵저버 콜백함수
+  //     const target = entries[0];
+  //     if(!endRef.current && target.isIntersecting && preventRef.current){ //옵저버 중복 실행 방지
+  //       preventRef.current = false; //옵저버 중복 실행 방지
+  //     }
+  // })
+
+
+
+  if(loading) return <Loading />;
   if(error) return <Error>Error!!</Error>
 
 
@@ -49,14 +82,6 @@ export default Gallery;
 const GalleryContainer = styled.div`
   padding: 1rem;
   /* min-height: 100vh; */
-`
-
-const Loading = styled.div`
-  display: flex;
-  font-size: 5rem;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 `
 
 const Error = styled.div`
