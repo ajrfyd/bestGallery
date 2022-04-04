@@ -63,8 +63,8 @@ const App = () => {
     <Container>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} loading={loading} setLoading={setLoading}/>
       <Search setSearchState={setSearchState} />
-      {/* <Gallery searchState={searchState} /> */}
-      <Test />
+      <Gallery searchState={searchState} />
+      {/* <Test /> */}
     </Container>
   )
 }
