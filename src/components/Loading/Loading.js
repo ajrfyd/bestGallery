@@ -1,23 +1,22 @@
 import React from "react";
 import styled, { css } from 'styled-components';
 
-const Loading = () => {
-  const deg = Array.from(new Array(20), (item, idx) => idx);
-
-
+const Loading = ({ hasMargin }) => {
+  const deg = Array.from(new Array(20), (_, idx) => idx);
+  
   return (
-    <LoadingSpinner>
+    <LoadingSpinner style={hasMargin && { marginTop: '40vh' } }>
       <LoadingContainer>
         <Circle>
           {
             deg.map((item, idx) => <Span key={idx} num={item}/>)
           }
         </Circle>
-        <Circle2>
+        <Circle>
           {
             deg.map((item, idx) => <Span2 key={idx} num={item}/>)
           }
-        </Circle2>
+        </Circle>
       </LoadingContainer>
     </LoadingSpinner>
   )
@@ -25,12 +24,15 @@ const Loading = () => {
 
 export default Loading;
 
+Loading.defaultProps = {
+  minHeight: '100vh',
+}
+
 const LoadingSpinner = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  /* background-color: #eee; */
+  background-color: transparent;
   animation: aniColor 1s linear infinite;
 
   @keyframes aniColor {
@@ -45,12 +47,16 @@ const LoadingSpinner = styled.section`
 
 const LoadingContainer = styled.div`
   display: flex;
+
+  & div:nth-child(2) {
+    transform: rotate(-180deg);
+  }
 `
 
 const Circle = styled.div`
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 50px;
+  height: 50px;
   margin: 0 -7.5px;
 `
 
@@ -113,7 +119,7 @@ const Span2 = styled.span`
 
   @keyframes animate {
     0% {
-      transform: scale(1);
+      transform: scale(.6);
     }
     50%, 100% {
       transform: scale(.1);
@@ -121,17 +127,3 @@ const Span2 = styled.span`
   }
   
 `
-
-const Circle2 = styled.div`
-  position: relative;
-  width: 150px;
-  height: 150px;
-  margin: 0 -7.5px;
-  transform: rotate(-180deg);
-  
-  & span:before {
-    animation-delay: calc(0.5s * ${({num}) => num});
-  }
-`
-
-

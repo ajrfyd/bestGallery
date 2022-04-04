@@ -15,7 +15,7 @@ const initialState = {
 export const getImgs = (page) => async (dispatch, getState) => {
   const localData = localStorage.getItem('data') || [];
   let { storeData } = getState().dataReducer;
-  const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=20`
+  const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=30`
   // const API = `http://localhost:4000/imgs${page}`
   // if(localData) {
   //   console.log('Request to Local');
@@ -65,38 +65,59 @@ export const getImgs = (page) => async (dispatch, getState) => {
   //     dispatch({ type: REQ_DATA_ERROR, payload })
   //   }
   // }
-  if(localData.length === 0) {
+
+  //?
+  // if(localData.length === 0) {
+  //   dispatch({ type: REQ_DATA })
+  //   try {
+  //     const { data } = await axios.get(API)
+  //     const payload = data;
+  //     console.log(payload)
+  //     localStorage.setItem('data', JSON.stringify(payload))
+  
+  //     dispatch({ type: REQ_DATA_SUCCESS, payload })
+  //   } catch(e) {
+  //     const payload = e;
+  //     dispatch({ type: REQ_DATA_ERROR, payload })
+  //   }
+  // } else {
+  //   const prevData = [...JSON.parse(localData)];
+  //   console.log('heoolo?')
+  //   console.log(page)
+  //   try {
+  //     const { data } = await axios.get(API);
+  //     console.log(data);
+  //     console.log(prevData);
+  //     const payload = [...prevData, ...data];
+  //     console.log(payload)
+  //     dispatch({ type: REQ_DATA_SUCCESS, payload })
+  //   } catch(e) {
+  //     const payload = e;
+  //     dispatch({ type: REQ_DATA_ERROR, payload })
+  //   }
+    
+  // }
+  console.log(storeData);  
+
+  if(storeData) {
+    console.log('hello?')
+    return
+  } else {
     dispatch({ type: REQ_DATA })
     try {
       const { data } = await axios.get(API)
       const payload = data;
       console.log(payload)
-      localStorage.setItem('data', JSON.stringify(payload))
+      // localStorage.setItem('data', JSON.stringify(payload))
   
       dispatch({ type: REQ_DATA_SUCCESS, payload })
     } catch(e) {
       const payload = e;
       dispatch({ type: REQ_DATA_ERROR, payload })
     }
-  } else {
-    const prevData = [...JSON.parse(localData)];
-    console.log('heoolo?')
-    console.log(page)
-    try {
-      const { data } = await axios.get(API);
-      console.log(data);
-      console.log(prevData);
-      const payload = [...prevData, ...data];
-      console.log(payload)
-      dispatch({ type: REQ_DATA_SUCCESS, payload })
-    } catch(e) {
-      const payload = e;
-      dispatch({ type: REQ_DATA_ERROR, payload })
-    }
-    
   }
-  
-}
+} 
+
 
 const dataReducer = (state = initialState, action) => {
   switch(action.type) {

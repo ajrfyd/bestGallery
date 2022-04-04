@@ -12,8 +12,8 @@ const Gallery = ({ apiData, searchState }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
   const dispatch = useDispatch();
   // const [hasNext, setHasNext] = useState(true);
-  const getMoreImgEl = useRef(null);
-  const intersecting = useInfiniteScroll(getMoreImgEl);
+  // const getMoreImgEl = useRef(null);
+  // const intersecting = useInfiniteScroll(getMoreImgEl);
   const [page, setPage] = useState(1);
   // console.log(page)
   // const localData = localStorage.getItem('data');
@@ -43,8 +43,10 @@ const Gallery = ({ apiData, searchState }) => {
 
   useEffect(()=> {
     dispatch(getImgs(page));
+    console.log('a')
+
     setPage(page => page + 1);
-  }, [dispatch, intersecting])
+  }, [dispatch])
   // useEffect(() => {
   //   if(localData) return;
   // }, [])
@@ -59,7 +61,7 @@ const Gallery = ({ apiData, searchState }) => {
 
 
 
-  if(loading) return <Loading />;
+  if(loading) return <Loading hasMargin/>;
   if(error) return <Error>Error!!</Error>
 
 
@@ -69,9 +71,9 @@ const Gallery = ({ apiData, searchState }) => {
         {
           searchState ? <SearchCard /> : <CardList apiData={data} loading={loading} error={error}/>
         }
-        {
+        {/* {
           !searchState && <div ref={getMoreImgEl}/>
-        }
+        } */}
         {/* <div ref={getMoreImgEl}/> */}
       </GalleryContainer>
   )
@@ -82,6 +84,7 @@ export default Gallery;
 const GalleryContainer = styled.div`
   padding: 1rem;
   /* min-height: 100vh; */
+  /* border: 1px solid red; */
 `
 
 const Error = styled.div`

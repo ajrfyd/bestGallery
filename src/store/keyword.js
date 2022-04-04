@@ -11,7 +11,6 @@ const GET_PAGE_SUCCESS = 'keyword/GET_PAGE_SUCCESS';
 const GET_PAGE_ERROR = 'keyword/GET_PAGE_ERROR';
 
 export const searchData = (key, page = 1) => async dispatch => {
-  console.log(page, '112512451245125123')
   const history = localStorage.getItem(key + page);
   if(history) {
     const payload = JSON.parse(history);
@@ -28,7 +27,6 @@ export const searchData = (key, page = 1) => async dispatch => {
 
     if(data) {
       const imgData = utils.keywordSearch(data);
-      console.log(page, 'why did not working???????')
 
       const payload = {
         keyword : key,

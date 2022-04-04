@@ -3,24 +3,11 @@ import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
 
-const Card = ({ url, likes, id }) => {
+const Test3 = ({ url, likes, id }) => {
   
   // 테스트중 
   const reqLikes = async () => {
-    // const token = localStorage.getItem('access_token');
-    // if(token) {
-    //   const url = `https://api.unsplash.com/photos/${id}/like`
-    //   console.log(token);
-    //   const res = await axios.post(url, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Bearer ${token}`
-    //     },
-    //     withCredentials: true,
-    //   })
-    //   console.log(res);
-    // }
-    console.log('asdasd')
+    
   }
 
   return (
@@ -36,18 +23,21 @@ const Card = ({ url, likes, id }) => {
   )
 }
 
-export default Card;
+export default Test3;
+
+
 const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: .5rem;
   /* border: 1px solid red; */
+  /* height: fit-content; */
   `
 
 const ImgContainer = styled.div`
   position: relative;
-  break-inside: avoid;
-  /* overflow: hidden; */
+  /* break-inside: avoid; */
+  /* border: 1px solid blue; */
   
   &:hover div {
     display: block;
@@ -58,16 +48,8 @@ const Image = styled.img`
   border-radius: 5px;
   box-shadow: 0 8px 20px -15px #000;
   line-height: 0;
-
-  /* &:hover {
-    opacity: .7;
-    transform: scale(1.01)
-  } */
-  
-  /* &:hover ~ div {
-    display: flex;
-  } */
-  
+  width: 200px;
+  height: 300px;
 `
 
 const Utils = styled.div`
@@ -106,12 +88,3 @@ const Likes = styled.span`
 `
 
 
-
-// &:hover ~ div svg {
-//   opacity: 1;
-//   /* display: block; */
-// }
-// &:hover ~ div span {
-//   opacity: 1;
-//   display: block;
-// }

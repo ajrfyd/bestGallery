@@ -33,25 +33,16 @@ export default {
       return data;
     }
   },
-  useInfiniteScroll(targetEl) {
-    const observerRef = useRef(null);
-    const [intersecting, setIntersecting] = useState(false);
-
-    const getObserver = useCallback(() => {
-      if(!observerRef.current) {
-        observerRef.current = new IntersectionObserver(entries => setIntersecting(entries.some(entry => entry.isIntersecting)));
-      } 
-      return observerRef.current
-    }, [observerRef.current]);
-
-    useEffect(() => {
-      if(targetEl.current) getObserver().observe(targetEl.current);
-
-      return () => {
-        getObserver().disconnect();
+  getUserInfo: async (token) => {
+    const { data } = await axios.get(
+      `https://api.unsplash.com/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        // withCredentials: true
       }
-    }, [targetEl.current])
-
-    return intersecting;
+    );
+    return data;
   } 
 }

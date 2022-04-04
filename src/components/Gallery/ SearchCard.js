@@ -20,7 +20,7 @@ const SearchCard = () => {
   }
 
   
-  if(loading) return <Loading />
+  if(loading) return <Loading hasMargin/>
   if(error) {
     console.log(error.response.status)
   }

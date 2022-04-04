@@ -2,13 +2,17 @@ import React from "react";
 import Logo from "../../components/Header/Logo";
 import LoginBtn from "../../components/Header/LoginBtn";
 import styled from 'styled-components';
+import Loading from "../../components/Loading/Loading";
 
-const Header = ({ userInfo, setUserInfo }) => {
-
+const Header = ({ userInfo, setUserInfo, loading, setLoading }) => {
+  console.log(loading)
   return (
     <HeaderContainer>
       <Logo />
-      <LoginBtn userInfo={userInfo} setUserInfo={setUserInfo}/>
+      {
+        loading ? <Loading /> : <LoginBtn userInfo={userInfo} setUserInfo={setUserInfo} setLoading={setLoading}/>
+      }
+      {/* <LoginBtn userInfo={userInfo} setUserInfo={setUserInfo}/> */}
     </HeaderContainer>
   )
 }

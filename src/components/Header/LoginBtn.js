@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import axios from "axios";
 
-const LoginBtn = ({ userInfo, setUserInfo }) => {
+const LoginBtn = ({ userInfo, setUserInfo, setLoading }) => {
   const URL = `https://unsplash.com/oauth/authorize?client_id=${process.env.REACT_APP_ACCESS_KEY}&redirect_uri=${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://best-gallery.vercel.app'}&response_type=code&scope=public+read_user+write_likes`;
 
   const logoutHandler = () => {
@@ -15,7 +15,7 @@ const LoginBtn = ({ userInfo, setUserInfo }) => {
 
   return (
     <Btn >
-      { !userInfo.isLogin && <a href={URL}>LogIn</a> }
+      { !userInfo.isLogin && <a href={URL} onClick={() => setLoading(true)}>LogIn</a> }
       { userInfo.isLogin && <a onClick={() => logoutHandler()}>LogOut</a> }
     </Btn>
   )

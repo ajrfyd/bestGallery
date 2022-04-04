@@ -11,11 +11,11 @@ const CardList = ({ apiData, loading, error }) => {
   const getMoreImgEl = useRef(null);
   const intersecting = useInfiniteScroll(getMoreImgEl);
 
-  // useEffect(() => {
-  //   if(intersecting) {
-  //     console.log('hi')
-  //   }
-  // }, [intersecting])
+  useEffect(() => {
+    if(intersecting) {
+      console.log('hi')
+    }
+  }, [intersecting])
 
   if(loading) {
     return <Loading />
@@ -31,8 +31,8 @@ const CardList = ({ apiData, loading, error }) => {
             <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
           )) : null
         }
+      <div ref={getMoreImgEl}/>
       </CardListContainer>
-      {/* <div ref={getMoreImgEl}/> */}
     </>
   )
 }
