@@ -1,22 +1,21 @@
 import React from "react";
 import styled from 'styled-components';
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { reqLogout } from "../../store/user";
 
-const LoginBtn = ({ userInfo, setUserInfo, setLoading }) => {
+const LoginBtn = ({ user, isLogin }) => {
   const URL = `https://unsplash.com/oauth/authorize?client_id=${process.env.REACT_APP_ACCESS_KEY}&redirect_uri=${process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://best-gallery.vercel.app'}&response_type=code&scope=public+read_user+write_likes`;
+  const dispatch = useDispatch();
 
   const logoutHandler = () => {
     localStorage.removeItem('access_token');
-    setUserInfo({
-      isLogin: false,
-      accessToken: ''
-    })
+    dispatch(reqLogout());
   }
-
+  console.log(user);
   return (
     <Btn >
-      { !userInfo.isLogin && <a href={URL} onClick={() => setLoading(true)}>LogIn</a> }
-      { userInfo.isLogin && <a onClick={() => logoutHandler()}>LogOut</a> }
+      { !isLogin && <a href={URL} >LogIn</a> }
+      { isLogin && <a onClick={() => logoutHandler()}>LogOut</a> }
     </Btn>
   )
 }

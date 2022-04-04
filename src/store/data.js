@@ -97,7 +97,7 @@ export const getImgs = (page) => async (dispatch, getState) => {
   //   }
     
   // }
-  console.log(storeData);  
+  // console.log(storeData);  
 
   if(storeData) {
     console.log('hello?')
@@ -107,7 +107,7 @@ export const getImgs = (page) => async (dispatch, getState) => {
     try {
       const { data } = await axios.get(API)
       const payload = data;
-      console.log(payload)
+      // console.log(payload)
       // localStorage.setItem('data', JSON.stringify(payload))
   
       dispatch({ type: REQ_DATA_SUCCESS, payload })

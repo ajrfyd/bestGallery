@@ -29,7 +29,7 @@ export default {
     )
     if(res) {
       const data = res.data;
-      console.log(data)
+      // console.log(data)
       return data;
     }
   },
@@ -43,6 +43,7 @@ export default {
         // withCredentials: true
       }
     );
+    // console.log(data);
     return data;
   } 
 }
