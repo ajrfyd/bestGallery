@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
+import { useSelector } from "react-redux";
+import Alert from "../Alert/Alert";
 
 const Card = ({ url, likes, id }) => {
-  
+  const { isLogin } = useSelector(state => state.userReducer);
+  const [modal, setModal] = useState(false);
   // 테스트중 
+  const text = '로그인을 해야 사용할 수 있는 기능입니다. '
   const reqLikes = async () => {
+    setModal(true);
     // const token = localStorage.getItem('access_token');
     // if(token) {
     //   const url = `https://api.unsplash.com/photos/${id}/like`
@@ -24,15 +29,22 @@ const Card = ({ url, likes, id }) => {
   }
 
   return (
-    <CardContainer>
-      <ImgContainer>
-        <Image src={url} alt='Image' onClick={() => console.log('gi?')}/>
-        <Utils>
-          <FaRegThumbsUp onClick={() => reqLikes()}/>
-          <Likes > &times; {likes}</Likes>
-        </Utils>
-      </ImgContainer>
-    </CardContainer>
+    <>
+      <CardContainer>
+        <ImgContainer>
+          <Image src={url} alt='Image' onClick={() => console.log('gi?')}/>
+          <Utils>
+            <FaRegThumbsUp onClick={() => reqLikes()}/>
+            <Likes > &times; {likes}</Likes>
+          </Utils>
+        </ImgContainer>
+      </CardContainer>
+      {
+        modal && isLogin ? 
+          <Alert modal={modal} setModal={setModal}/> : 
+          <Alert modal={modal} setModal={setModal} text={text}/>
+      }
+    </>
   )
 }
 

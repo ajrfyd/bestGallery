@@ -99,10 +99,11 @@ export const getImgs = (page) => async (dispatch, getState) => {
   // }
   // console.log(storeData);  
 
-  if(storeData) {
+  if(storeData && page !== 1) {
     console.log('hello?')
     return
-  } else {
+  } 
+  if(!storeData && page === 1) {
     dispatch({ type: REQ_DATA })
     try {
       const { data } = await axios.get(API)

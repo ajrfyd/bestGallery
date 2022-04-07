@@ -13,7 +13,7 @@ const CardList = ({ apiData, loading, error }) => {
 
   useEffect(() => {
     if(intersecting) {
-      console.log('hi')
+      // console.log('hi')
     }
   }, [intersecting])
 

@@ -7,13 +7,16 @@ import Search from "./containers/Search/Search";
 import Gallery from "./containers/Gallery/Gallery";
 import utils from './utils';
 import Test from '../src/containers/Gallery/Test';
+import Alert from "./components/Alert/Alert";
 
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
   // searchState의 값에 따라 메인 화면과 검색결과 화면의 전환이 이루어짐.
-  const { isLogin, user, loading, error } = useSelector(state => state.userReducer)
+  const { isLogin, user, loading, error } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
+
+  const [modal, setModal] = useState(false);
 
   const getToken = async (authorizationCode) => {
     const { access_token } = await utils.getAccessToken(authorizationCode);
@@ -32,7 +35,6 @@ const App = () => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     const token = localStorage.getItem('access_token');
-    
     if(!authorizationCode && !token) return
     if(token) {
       dispatch(reqUser(token));
@@ -41,15 +43,17 @@ const App = () => {
       getToken(authorizationCode)
       return
     }
-    
   }, [])
-    
+
+  const text = '권한이 없습니다. 로그인을 해 보세요!'
+
   return (
     <Container>
       <Header user={user} loading={loading} isLogin={isLogin}/>
       <Search setSearchState={setSearchState} />
-      <Gallery searchState={searchState} />
+      <Gallery searchState={searchState} setModal={setModal}/>
       {/* <Test /> */}
+      { modal && <Alert modal={modal} setModal={setModal} />}
     </Container>
   )
 }

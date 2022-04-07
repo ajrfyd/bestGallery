@@ -8,7 +8,7 @@ import utils from "../../utils";
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import Loading from "../../components/Loading/Loading";
 
-const Gallery = ({ apiData, searchState }) => {
+const Gallery = ({ apiData, searchState, setModal }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
   const dispatch = useDispatch();
   // const [hasNext, setHasNext] = useState(true);
@@ -43,14 +43,18 @@ const Gallery = ({ apiData, searchState }) => {
 
   useEffect(()=> {
     dispatch(getImgs(page));
-    console.log('a')
-
     setPage(page => page + 1);
+
   }, [dispatch])
   // useEffect(() => {
   //   if(localData) return;
   // }, [])
 
+  // useEffect(() => {
+  //   if(page === 1) return;
+  //   // dispatch(getImgs(page));
+  //   // setPage(page => page + 1);
+  // }, [page])
 
   // const obsHandler = ((entries) => { //옵저버 콜백함수
   //     const target = entries[0];
@@ -58,14 +62,17 @@ const Gallery = ({ apiData, searchState }) => {
   //       preventRef.current = false; //옵저버 중복 실행 방지
   //     }
   // })
-
+  const getMoreImgHandler = () => {
+    dispatch(getImgs(page));
+    setModal(true);
+  }
 
 
   if(loading) return <Loading hasMargin/>;
   if(error) return <Error>Error!!</Error>
 
 
-
+  console.log(page)
   return (
       <GalleryContainer>
         {
@@ -75,6 +82,9 @@ const Gallery = ({ apiData, searchState }) => {
           !searchState && <div ref={getMoreImgEl}/>
         } */}
         {/* <div ref={getMoreImgEl}/> */}
+        {
+          !searchState && <ReqMore onClick={getMoreImgHandler}>Get More Imgs</ReqMore>
+        }
       </GalleryContainer>
   )
 }
@@ -85,6 +95,7 @@ const GalleryContainer = styled.div`
   padding: 1rem;
   /* min-height: 100vh; */
   /* border: 1px solid red; */
+  text-align: center;
 `
 
 const Error = styled.div`
@@ -93,4 +104,18 @@ const Error = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+`
+const ReqMore = styled.button`
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, .5);
+  padding: .5rem 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(1.1);
+  }
 `
