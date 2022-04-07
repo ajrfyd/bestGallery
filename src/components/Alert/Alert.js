@@ -4,10 +4,17 @@ import styled, { css } from 'styled-components';
 
 const Alert = ({ modal, setModal, text = '' }) => {
   const display = modal ? 'flex' : 'none';
+  const bgRef = useRef(null);
+
+  const closeModalHandler = (e) => {
+    if(e.target === bgRef.current) {
+      setModal(false)
+    }
+  }
 
   return (
     
-    <BackGround style={{ display: display }} onClick={() => setModal(false)}>
+    <BackGround style={{ display: display }} onClick={closeModalHandler} ref={bgRef}>
       <Modal>
         <ClearBtn onClick={() => setModal(false)}>
           ❌
