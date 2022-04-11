@@ -1,38 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Alert from "../Alert/Alert";
+import utils from "../../utils";
+import IndividualImg from "./IndividualImg";
 
 const Card = ({ url, likes, id }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   const [modal, setModal] = useState(false);
-  // 테스트중 
   const text = '로그인을 해야 사용할 수 있는 기능입니다. '
+
+  const [zoom, setZoom] = useState(false);
+  const [position, setPosition] = useState({
+    top: 0,
+    width: 0,
+    height: 0,
+    left: 0
+  })
+  const targetRef = useRef(null);
+
+  const handleImgClick = useCallback(() => {
+    setZoom(true)
+    // console.log(targetRef.current.getBoundingClientRect());
+    const { top, width, height, left } = targetRef.current.getBoundingClientRect();
+    setPosition(position => {
+      return {
+        ...position,
+        top,
+        width,
+        height,
+        left
+      }
+    })
+  }, [])
+
   const reqLikes = async () => {
-    setModal(true);
-    // const token = localStorage.getItem('access_token');
-    // if(token) {
-    //   const url = `https://api.unsplash.com/photos/${id}/like`
-    //   console.log(token);
-    //   const res = await axios.post(url, {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Bearer ${token}`
-    //     },
-    //     withCredentials: true,
-    //   })
-    //   console.log(res);
-    // }
-    console.log('asdasd')
+    if(!isLogin) {
+      setModal(true);
+      return;
+    }
+
+    const token = localStorage.getItem('access_token');
+
+    if(token) {
+      const { photo, user } = await utils.reqLike(token, id);
+      console.log(photo, user);
+    }
   }
 
   return (
     <>
       <CardContainer>
         <ImgContainer>
-          <Image src={url} alt='Image' onClick={() => console.log('gi?')}/>
+          <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick}/>
           <Utils>
             <FaRegThumbsUp onClick={() => reqLikes()}/>
             <Likes > &times; {likes}</Likes>
@@ -44,6 +66,9 @@ const Card = ({ url, likes, id }) => {
           <Alert modal={modal} setModal={setModal}/> : 
           <Alert modal={modal} setModal={setModal} text={text}/>
       }
+      {
+        zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url}/>
+      }
     </>
   )
 }
@@ -53,7 +78,7 @@ const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: .5rem;
-  /* border: 1px solid red; */
+  cursor: pointer;
   `
 
 const ImgContainer = styled.div`

@@ -13,7 +13,7 @@ export const reqUser = (token) => async (dispatch, getState) => {
       `https://api.unsplash.com/me`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          authorization: `Bearer ${token}`
         },
         // withCredentials: true
       }

@@ -1,25 +1,53 @@
-import React from "react";
-import styled from 'styled-components';
+import React, { useState, useCallback, useRef } from "react";
+import styled, { ThemeProvider } from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
+import IndividualImg from "./IndividualImg";
 
 const Test3 = ({ url, likes, id }) => {
-  
+  const [zoom, setZoom] = useState(false);
+  const [position, setPosition] = useState({
+    top: 0,
+    width: 0,
+    height: 0,
+    left: 0
+  })
+  const targetRef = useRef(null);
   // 테스트중 
+
   const reqLikes = async () => {
-    
   }
 
+  const handleImgClick = useCallback(() => {
+    setZoom(true)
+    console.log(targetRef.current.getBoundingClientRect());
+    const { top, width, height, left } = targetRef.current.getBoundingClientRect();
+    setPosition(position => {
+      return {
+        ...position,
+        top,
+        width,
+        height,
+        left
+      }
+    })
+  }, [])
+
   return (
-    <CardContainer>
-      <ImgContainer>
-        <Image src={url} alt='Image' onClick={() => console.log('gi?')}/>
-        <Utils>
-          <FaRegThumbsUp onClick={() => reqLikes()}/>
-          <Likes > &times; {likes}</Likes>
-        </Utils>
-      </ImgContainer>
-    </CardContainer>
+    <>
+      <CardContainer >
+        <ImgContainer >
+          <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick}/>
+          <Utils>
+            <FaRegThumbsUp onClick={() => reqLikes()}/>
+            <Likes > &times; {likes}</Likes>
+          </Utils>
+        </ImgContainer>
+      </CardContainer>
+      {
+        zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url}/>
+      }      
+    </>
   )
 }
 
@@ -36,8 +64,6 @@ const CardContainer = styled.div`
 
 const ImgContainer = styled.div`
   position: relative;
-  /* break-inside: avoid; */
-  /* border: 1px solid blue; */
   
   &:hover div {
     display: block;
@@ -86,5 +112,9 @@ const Likes = styled.span`
   /* opacity: 0; */
   /* display: none */
 `
+
+
+
+
 
 

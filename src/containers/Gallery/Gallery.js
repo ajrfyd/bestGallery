@@ -7,6 +7,7 @@ import { getImgs } from "../../store/data";
 import utils from "../../utils";
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import Loading from "../../components/Loading/Loading";
+import axios from "axios";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
@@ -15,6 +16,7 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   // const getMoreImgEl = useRef(null);
   // const intersecting = useInfiniteScroll(getMoreImgEl);
   const [page, setPage] = useState(1);
+
   // console.log(page)
   // const localData = localStorage.getItem('data');
   // const [isFetching, setIsFetching] = useState(false);
@@ -67,7 +69,6 @@ const Gallery = ({ apiData, searchState, setModal }) => {
     setModal(true);
   }
 
-
   if(loading) return <Loading hasMargin/>;
   if(error) return <Error>Error!!</Error>
 
@@ -118,4 +119,9 @@ const ReqMore = styled.button`
   &:active {
     transform: scale(1.1);
   }
+`
+
+const Btn = styled.button`
+  padding: 10px 1rem;
+  margin: 0 1rem;
 `

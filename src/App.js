@@ -8,7 +8,7 @@ import Gallery from "./containers/Gallery/Gallery";
 import utils from './utils';
 import Test from '../src/containers/Gallery/Test';
 import Alert from "./components/Alert/Alert";
-
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -16,15 +16,15 @@ const App = () => {
   const { isLogin, user, loading, error } = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
+  const queryClient = new QueryClient();
+
   const [modal, setModal] = useState(false);
 
   const getToken = async (authorizationCode) => {
     const { access_token } = await utils.getAccessToken(authorizationCode);
-
     if(!access_token) return
 
     dispatch(reqUser(access_token));
-
     localStorage.setItem('access_token', access_token);
     window.history.replaceState({}, null, window.location.pathname);
   }
@@ -48,13 +48,15 @@ const App = () => {
   const text = '권한이 없습니다. 로그인을 해 보세요!'
 
   return (
-    <Container>
-      <Header user={user} loading={loading} isLogin={isLogin}/>
-      <Search setSearchState={setSearchState} />
-      <Gallery searchState={searchState} setModal={setModal}/>
-      {/* <Test /> */}
-      { modal && <Alert modal={modal} setModal={setModal} />}
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container>
+        <Header user={user} loading={loading} isLogin={isLogin}/>
+        <Search setSearchState={setSearchState} />
+        <Gallery searchState={searchState} setModal={setModal}/>
+        {/* <Test /> */}
+        { modal && <Alert modal={modal} setModal={setModal} />}
+      </Container>
+    </QueryClientProvider>
   )
 }
 

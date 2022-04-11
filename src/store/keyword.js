@@ -23,8 +23,12 @@ export const searchData = (key, page = 1) => async dispatch => {
   
   try {
     const API = `https://api.unsplash.com/search/photos?page=${page}&query=${key}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-    const { data } = await axios.get(API);
-
+    const { data } = await axios.get(API, {
+      headers: {
+        "Cache-Control": "public, max-age=600",
+      }
+    });
+    console.log(data)
     if(data) {
       const imgData = utils.keywordSearch(data);
 

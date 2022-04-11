@@ -130,6 +130,10 @@ const SearchIcon = styled.div`
 `
 
 const HomeIcon = styled.span`
+  &:active {
+    transform: scale(1.1);
+
+  } 
   & .home {
     margin-right: .5rem;
     cursor: pointer;

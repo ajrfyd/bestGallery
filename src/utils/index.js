@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useCallback, useRef, useEffect } from 'react';
 
+// const url= 'https://unsplash.com/'
+
 export default {
   keywordSearch(data) {
     const { results } = data;
@@ -43,7 +45,19 @@ export default {
         // withCredentials: true
       }
     );
-    // console.log(data);
     return data;
-  } 
+  },
+  reqLike: async (token, id) => {
+    const url = `https://api.unsplash.com/photos/${id}/like`
+    const { data } = await axios.post(
+      url,
+      { id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      )
+    return data;
+  }
 }

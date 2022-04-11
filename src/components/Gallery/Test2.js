@@ -9,24 +9,7 @@ import { getImgs } from "../../store/data";
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 
 const Test2 = ({ apiData, loading, error }) => {
-  // const getMoreImgEl = useRef(null);
-  // const intersecting = useInfiniteScroll(getMoreImgEl);
-  // const dispatch = useDispatch();
-  // const [page, setPage] = useState(1);
-
-  
-  
-
-
-  // useEffect(() => {
-  //   if(intersecting) {
-  //     console.log('hi')
-  //     dispatch(getImgs(page))
-  //     setPage(page => page + 1);
-  //     console.log(page)
-  //   }
-  // }, [intersecting])
-
+  console.log(apiData)
   if(loading) {
     return <Loading />
   }
@@ -39,6 +22,7 @@ const Test2 = ({ apiData, loading, error }) => {
         {
           apiData ? apiData.map(data => (
             <Test3 key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
+            // <div key={data.id} style={{ fontSize: '3rem', height: '5rem', margin: '2rem 0' }}>{data.id}</div>
           )) : null
         }
         {/* <div ref={getMoreImgEl}/> */}
