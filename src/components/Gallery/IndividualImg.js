@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const IndividualImg = ({ top, left, setZoom, url }) => {
 
   return (
-    <BackDrop style={{ top, left }}>
+    <BackDrop >
       <ImgContainer>
         <Close onClick={() => setZoom(false)}>
           ❌
@@ -25,7 +25,8 @@ const BackDrop = styled.div`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-
+  top: 50%;
+  left: 50%;
 
   z-index: 999999;
   animation: zoom .5s linear both;
@@ -53,7 +54,7 @@ const ImgContainer = styled.div`
   height: 70vh;
   position: relative;
   width: 70vw;
-  background-color: #eee;
+  background-color: #ddd;
   border-radius: 5px;
   transition-delay: .5s;
 
@@ -87,4 +88,14 @@ const Close = styled.button`
 const Img = styled.img`
   border-radius: 5px;
   transform: scale(1.5);
+  animation: zoom2 .5s .5s linear both;
+
+  @keyframes zoom2 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `

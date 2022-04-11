@@ -10,6 +10,7 @@ import IndividualImg from "./IndividualImg";
 const Card = ({ url, likes, id }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   const [modal, setModal] = useState(false);
+  const [like, setLike] = useState(false);
   const text = '로그인을 해야 사용할 수 있는 기능입니다. '
 
   const [zoom, setZoom] = useState(false);
@@ -45,8 +46,26 @@ const Card = ({ url, likes, id }) => {
     const token = localStorage.getItem('access_token');
 
     if(token) {
-      const { photo, user } = await utils.reqLike(token, id);
-      console.log(photo, user);
+      if(!like) {
+        try{
+          const { photo: { liked_by_user }, user } = await utils.reqLike(token, id);
+          if(liked_by_user) {
+            setLike(true);
+          }        
+  
+        } catch(e) {
+          throw new Error('Not Found!')
+        }
+      } else {
+        try {
+          const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
+          if(!liked_by_user) {
+            setLike(false);
+          }
+        } catch(e) {
+          throw new Error('Not found!')
+        }
+      }
     }
   }
 
@@ -56,7 +75,7 @@ const Card = ({ url, likes, id }) => {
         <ImgContainer>
           <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick}/>
           <Utils>
-            <FaRegThumbsUp onClick={() => reqLikes()}/>
+            <FaRegThumbsUp onClick={reqLikes} style={{ color: like ? 'red' : 'blue' }}/>
             <Likes > &times; {likes}</Likes>
           </Utils>
         </ImgContainer>
@@ -69,6 +88,7 @@ const Card = ({ url, likes, id }) => {
       {
         zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url}/>
       }
+      
     </>
   )
 }
@@ -95,6 +115,10 @@ const Image = styled.img`
   box-shadow: 0 8px 20px -15px #000;
   line-height: 0;
   cursor: pointer;  
+
+  &:hover {
+    transform: scale(1.01);
+  }
 
   /* &:hover {
     opacity: .7;
