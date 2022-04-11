@@ -8,6 +8,7 @@ import utils from "../../utils";
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import Loading from "../../components/Loading/Loading";
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
@@ -16,7 +17,6 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   // const getMoreImgEl = useRef(null);
   // const intersecting = useInfiniteScroll(getMoreImgEl);
   const [page, setPage] = useState(1);
-
   // console.log(page)
   // const localData = localStorage.getItem('data');
   // const [isFetching, setIsFetching] = useState(false);
@@ -48,6 +48,8 @@ const Gallery = ({ apiData, searchState, setModal }) => {
     setPage(page => page + 1);
 
   }, [dispatch])
+  // console.log(data)
+
   // useEffect(() => {
   //   if(localData) return;
   // }, [])
@@ -66,7 +68,7 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   // })
   const getMoreImgHandler = () => {
     dispatch(getImgs(page));
-    setModal(true);
+    // setModal(true);
   }
 
   if(loading) return <Loading hasMargin/>;
@@ -77,7 +79,9 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   return (
       <GalleryContainer>
         {
-          searchState ? <SearchCard /> : <CardList apiData={data} loading={loading} error={error}/>
+          searchState ? <SearchCard /> 
+          : <CardList apiData={data} loading={loading} error={error}/>
+          
         }
         {/* {
           !searchState && <div ref={getMoreImgEl}/>

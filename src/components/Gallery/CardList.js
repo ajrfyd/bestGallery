@@ -28,7 +28,7 @@ const CardList = ({ apiData, loading, error }) => {
       <CardListContainer>
         {
           apiData ? apiData.map(data => (
-            <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id}/>
+            <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id} url2={data.urls.small_s3}/>
           )) : null
         }
       <div ref={getMoreImgEl}/>

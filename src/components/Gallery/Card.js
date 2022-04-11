@@ -7,7 +7,7 @@ import Alert from "../Alert/Alert";
 import utils from "../../utils";
 import IndividualImg from "./IndividualImg";
 
-const Card = ({ url, likes, id }) => {
+const Card = ({ url, likes, id, url2 }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
@@ -86,7 +86,7 @@ const Card = ({ url, likes, id }) => {
           <Alert modal={modal} setModal={setModal} text={text}/>
       }
       {
-        zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url}/>
+        zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url} url2={url2}/>
       }
       
     </>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 
-const IndividualImg = ({ top, left, setZoom, url }) => {
+const IndividualImg = ({ top, left, setZoom, url, url2 }) => {
 
   return (
     <BackDrop >
@@ -10,7 +10,7 @@ const IndividualImg = ({ top, left, setZoom, url }) => {
           ❌
         </Close>
         <div>
-          <Img src={url}/>
+          <Img src={url2}/>
         </div>
       </ImgContainer>
     </BackDrop>
@@ -87,15 +87,23 @@ const Close = styled.button`
 
 const Img = styled.img`
   border-radius: 5px;
-  transform: scale(1.5);
+  /* transform: scale(1.5); */
   animation: zoom2 .5s .5s linear both;
+  max-width: 90%;
+  /* max-height: 80%;  */
 
   @keyframes zoom2 {
     0% {
       transform: scale(0);
     }
+    70% {
+      transform: scale(1.1);
+    }
     100% {
       transform: scale(1);
     }
+  }
+  @media (max-width: 600px) {
+    max-width: 90vw;
   }
 `

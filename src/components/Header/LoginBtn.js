@@ -11,7 +11,7 @@ const LoginBtn = ({ user, isLogin }) => {
     localStorage.removeItem('access_token');
     dispatch(reqLogout());
   }
-  console.log(user);
+  
   return (
     <Btn >
       { !isLogin && <a href={URL} >LogIn</a> }
