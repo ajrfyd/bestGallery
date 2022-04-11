@@ -78,7 +78,6 @@ const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: .5rem;
-  cursor: pointer;
   `
 
 const ImgContainer = styled.div`
@@ -95,6 +94,7 @@ const Image = styled.img`
   border-radius: 5px;
   box-shadow: 0 8px 20px -15px #000;
   line-height: 0;
+  cursor: pointer;  
 
   /* &:hover {
     opacity: .7;
