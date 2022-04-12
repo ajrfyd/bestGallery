@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 
-const IndividualImg = ({ top, left, setZoom, url, url2 }) => {
+const IndividualImg = ({ setZoom, url, url2 }) => {
+  const bgRef = useRef(null);
+
+  const closeBgHandler = (e) => {
+    if(e.target === bgRef.current) {
+      setZoom(false);
+    }
+  }
 
   return (
-    <BackDrop >
-      <ImgContainer>
-        <Close onClick={() => setZoom(false)}>
-          ❌
-        </Close>
-        <div>
+    <BackDrop className="bg" ref={bgRef} onClick={closeBgHandler}>
+      {/* <ImgContainer> */}
+        {/* <ImgContainer > */}
+          <Close onClick={() => setZoom(false)}>
+            ❌
+          </Close>
           <Img src={url2}/>
-        </div>
-      </ImgContainer>
+        {/* </ImgContainer> */}
+      {/* </ImgContainer> */}
     </BackDrop>
   )
 }
@@ -21,15 +28,15 @@ export default IndividualImg;
 
 const BackDrop = styled.div`
   position: fixed;
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, .4);
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   top: 50%;
   left: 50%;
 
   z-index: 999999;
-  animation: zoom .5s linear both;
+  animation: zoom .3s linear both;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +48,7 @@ const BackDrop = styled.div`
       box-shadow: 0 0 0 transparent;
     }
     100% {
-      box-shadow: 0 0 0 15000vh #ddd;
+      box-shadow: 0 0 0 15000vh #eee;
       border-radius: 0;
       top: 0;
       left: 0;
@@ -50,26 +57,7 @@ const BackDrop = styled.div`
     }
   }
 `
-const ImgContainer = styled.div`
-  height: 70vh;
-  position: relative;
-  width: 70vw;
-  background-color: #ddd;
-  border-radius: 5px;
-  transition-delay: .5s;
 
-  div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  @media (max-width: 600px) {
-    width: 100vh;
-    height: 100vh;
-  }
-`
 
 const Close = styled.button`
   position: absolute;
@@ -87,10 +75,8 @@ const Close = styled.button`
 
 const Img = styled.img`
   border-radius: 5px;
-  /* transform: scale(1.5); */
   animation: zoom2 .5s .5s linear both;
-  max-width: 90%;
-  /* max-height: 80%;  */
+  max-width: 50%;
 
   @keyframes zoom2 {
     0% {

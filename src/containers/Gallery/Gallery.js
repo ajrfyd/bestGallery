@@ -9,6 +9,7 @@ import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import Loading from "../../components/Loading/Loading";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Alert from "../../components/Alert/Alert";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const { loading, data, error } = useSelector(state => state.dataReducer);
@@ -67,8 +68,8 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   //     }
   // })
   const getMoreImgHandler = () => {
-    dispatch(getImgs(page));
-    // setModal(true);
+    // dispatch(getImgs(page));
+    setModal(true);
   }
 
   if(loading) return <Loading hasMargin/>;

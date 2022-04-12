@@ -24,13 +24,13 @@ const SearchCard = () => {
   if(error) {
     console.log(error.response.status)
   }
-  
+  console.log(data)
   return (
     <>
       <SearchCardContainer>
         {
           data ? data.imgData.map(item => (
-            <Card key={item.id} url={item.url} likes={item.likes}/>
+            <Card key={item.id} url={item.url} likes={item.likes} url2={item.url}/>
           )) : null
         }
       </SearchCardContainer>
