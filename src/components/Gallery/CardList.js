@@ -7,15 +7,7 @@ import useInfiniteScroll from "../../utils/useInfiniteScroll";
 
 
 
-const CardList = ({ apiData, loading, error }) => {
-  const getMoreImgEl = useRef(null);
-  const intersecting = useInfiniteScroll(getMoreImgEl);
-
-  useEffect(() => {
-    if(intersecting) {
-      // console.log('hi')
-    }
-  }, [intersecting])
+const CardList = ({ apiData, loading, error, setLiked, setModal }) => {
 
   if(loading) {
     return <Loading />
@@ -28,10 +20,17 @@ const CardList = ({ apiData, loading, error }) => {
       <CardListContainer>
         {
           apiData ? apiData.map(data => (
-            <Card key={data.id} url={data.urls.thumb} likes={data.likes} id={data.id} url2={data.urls.small_s3}/>
+            <Card 
+              key={data.id} 
+              url={data.urls.thumb} 
+              likes={data.likes} 
+              id={data.id} 
+              url2={data.urls.small_s3} 
+              setLiked={setLiked}
+              setModal={setModal}
+            />
           )) : null
         }
-      <div ref={getMoreImgEl}/>
       </CardListContainer>
     </>
   )
@@ -42,7 +41,12 @@ export default CardList;
 
 const CardListContainer = styled.div`
   line-height: 0;
-  
+  /* animation-name: bounceInRight;
+  animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; */
+
   @media (max-width: 2000px) {
     -webkit-column-count: 5;
     -webkit-column-gap: 0;
@@ -88,5 +92,39 @@ const CardListContainer = styled.div`
     column-count: 1;
     column-gap: 0;
   }
+
+  /* @keyframes bounceInRight {
+  0%, 100%, 60%, 75%, 90% {
+    -webkit-transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+    transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(3000px, 0, 0);
+    -ms-transform: translate3d(3000px, 0, 0);
+    transform: translate3d(3000px, 0, 0)
+  }
+  60% {
+    opacity: 1;
+    -webkit-transform: translate3d(-25px, 0, 0);
+    -ms-transform: translate3d(-25px, 0, 0);
+    transform: translate3d(-25px, 0, 0)
+  }
+  75% {
+    -webkit-transform: translate3d(10px, 0, 0);
+    -ms-transform: translate3d(10px, 0, 0);
+    transform: translate3d(10px, 0, 0)
+  }
+  90% {
+    -webkit-transform: translate3d(-5px, 0, 0);
+    -ms-transform: translate3d(-5px, 0, 0);
+    transform: translate3d(-5px, 0, 0)
+  }
+  100% {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none
+  } */
+}
 `
 

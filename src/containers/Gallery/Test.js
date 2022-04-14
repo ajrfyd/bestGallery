@@ -94,12 +94,7 @@ const Test = () => {
 
   return (
       <GalleryContainer>
-        <Test2 apiData={data.pages[0].data} loading={isLoading} error={isError}/> 
-        <div>
-          <Btn>👈</Btn>
-          <Btn>👉</Btn>
-        </div>
-        {/* <div ref={getMoreImgEl}/> */}
+        <Test2 apiData={data.pages[0].data} loading={isLoading} error={isError}/>         
       </GalleryContainer>
   )
 }

@@ -12,7 +12,7 @@ const initialState = {
 }
 
 
-export const getImgs = (page) => async (dispatch, getState) => {
+export const getImgs = (page = 1) => async (dispatch, getState) => {
   const localData = localStorage.getItem('data') || [];
   let { storeData } = getState().dataReducer;
   const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=30`
@@ -99,13 +99,14 @@ export const getImgs = (page) => async (dispatch, getState) => {
   // }
   // console.log(storeData);  
 
-  if(storeData && page !== 1) {
-    console.log('hello?')
-    return
-  } 
+  // if(storeData && page !== 1) {
+  //   console.log('hello?')
+  //   return
+  // } 
   if(!storeData && page === 1) {
     dispatch({ type: REQ_DATA })
     try {
+      const res = await axios.get(API);
       const { data } = await axios.get(API)
       const payload = data;
       // console.log(payload)

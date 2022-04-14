@@ -6,13 +6,12 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { searchData, getPage } from '../../store/keyword';
 import Pagination from "./Pagination";
 import Loading from "../Loading/Loading";
+import { useQuery } from 'react-query'
 
 const SearchCard = () => {
   const { loading, data, error, pageNum, keyword } = useSelector(state => state.keywordReducer);
   // const [page, setPage] = useState(1);
-  const [info, setInfo] = useState([]);
 
-  console.log(info)
   const dispatch = useDispatch();
   
   const requestPage = (page) => {
@@ -25,6 +24,9 @@ const SearchCard = () => {
     console.log(error.response.status)
   }
   console.log(data)
+
+
+
   return (
     <>
       <SearchCardContainer>

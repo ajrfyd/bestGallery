@@ -9,6 +9,8 @@ import utils from './utils';
 import Test from '../src/containers/Gallery/Test';
 import Alert from "./components/Alert/Alert";
 import { QueryClient, QueryClientProvider } from "react-query";
+import InfTest from "./components/Test/InfTest";
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -45,7 +47,6 @@ const App = () => {
     }
   }, [])
 
-  const text = '권한이 없습니다. 로그인을 해 보세요!'
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -54,8 +55,10 @@ const App = () => {
         <Search setSearchState={setSearchState} />
         <Gallery searchState={searchState} setModal={setModal}/>
         {/* <Test /> */}
-        { modal && <Alert modal={modal} setModal={setModal} />}
+        {/* <InfTest /> */}
+        { modal && !isLogin && <Alert modal={modal} setModal={setModal} text='로그인이 필요한 기능입니다'/>}
       </Container>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }

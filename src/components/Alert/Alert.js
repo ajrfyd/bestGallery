@@ -14,8 +14,8 @@ const Alert = ({ modal, setModal, text = '' }) => {
 
   return (
     
-    <BackGround style={{ display: display }} onClick={closeModalHandler} ref={bgRef}>
-      <Modal>
+    <BackGround style={{ display: display }} onClick={closeModalHandler} ref={bgRef} >
+      <Modal >
         <ClearBtn onClick={() => setModal(false)}>
           ❌
         </ClearBtn>
@@ -53,13 +53,13 @@ const Modal = styled.div`
   border-radius: 5px;
   box-shadow: 
   0 10px 10px rgba(0, 0, 0, 0.5)
-  0 10px 20px rgba(0, 0, 0, 0.5);
+  0 10px 20px rgba(0, 0, 0, 0.5)
   ;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* transition: .5s; */
+  /* transition: .5s;  */
   /* animation: modal .5s ease; */
   animation-name: bounceInDown;
   -webkit-animation-duration: .5s;
@@ -99,7 +99,7 @@ const Modal = styled.div`
       -webkit-transform: none;
       -ms-transform: none;
       transform: none
-    }
+    } 
 
     /* @keyframes modal {
       0% {

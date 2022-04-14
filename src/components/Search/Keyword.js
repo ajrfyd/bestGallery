@@ -7,9 +7,10 @@ const Keyword = ({ text, id, deleteKeyword, setText, inputRef }) => {
 
   return (
     <KeywordContainer>
-      <KeywordText onClick={() => {
+      <KeywordText onClick={(e) => {
         setText(text);
         inputRef.current.focus();
+        console.log(e)
       }}>
         {text}
       </KeywordText>

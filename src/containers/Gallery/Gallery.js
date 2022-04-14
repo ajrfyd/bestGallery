@@ -4,92 +4,68 @@ import styled from 'styled-components';
 import CardList from "../../components/Gallery/CardList";
 import SearchCard from "../../components/Gallery/ SearchCard";
 import { getImgs } from "../../store/data";
-import utils from "../../utils";
-import useInfiniteScroll from "../../utils/useInfiniteScroll";
 import Loading from "../../components/Loading/Loading";
+import { useQuery } from "react-query";
 import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Alert from "../../components/Alert/Alert";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
-  const { loading, data, error } = useSelector(state => state.dataReducer);
-  const dispatch = useDispatch();
-  // const [hasNext, setHasNext] = useState(true);
-  // const getMoreImgEl = useRef(null);
-  // const intersecting = useInfiniteScroll(getMoreImgEl);
   const [page, setPage] = useState(1);
-  // console.log(page)
-  // const localData = localStorage.getItem('data');
-  // const [isFetching, setIsFetching] = useState(false);
-  //!
+  const [liked, setLiked] = useState(false);
+  const [animate, setAnimate] = useState({
+    ani: true,
+    dir: 'right',
+  })
 
-  // const getMoreImgEl = useRef(null); 	//observer Element
+  const { ani, dir } = animate;
 
-  // const preventRef = useRef(true); //옵저버 중복 실행 방지
-  // const endRef = useRef(false); //모든 글 로드 확인
-
-
-  // useEffect(()=> { //옵저버 생성
-  //     const observer = new IntersectionObserver(obsHandler, { threshold : 0.5 });
-  //     if(getMoreImgEl.current) observer.observe(getMoreImgEl.current);
-  //     return () => { observer.disconnect(); }
-  // }, [])
-
-
-  // useEffect(() => {
-  //   setIsFetching(true);
-  //   if(intersecting && hasNext && isFetching) {
-  //     dispatch(getImgs());
-  //   }
-  //   setIsFetching(false)
-  // }, [dispatch, intersecting, hasNext])
-
-  useEffect(()=> {
-    dispatch(getImgs(page));
-    setPage(page => page + 1);
-
-  }, [dispatch])
-  // console.log(data)
-
-  // useEffect(() => {
-  //   if(localData) return;
-  // }, [])
-
-  // useEffect(() => {
-  //   if(page === 1) return;
-  //   // dispatch(getImgs(page));
-  //   // setPage(page => page + 1);
-  // }, [page])
-
-  // const obsHandler = ((entries) => { //옵저버 콜백함수
-  //     const target = entries[0];
-  //     if(!endRef.current && target.isIntersecting && preventRef.current){ //옵저버 중복 실행 방지
-  //       preventRef.current = false; //옵저버 중복 실행 방지
-  //     }
-  // })
-  const getMoreImgHandler = () => {
-    // dispatch(getImgs(page));
-    setModal(true);
+  
+  const getMainImgs = async (page) => {
+    const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=30`
+    const res = await axios.get(API);
+    return res;
   }
 
-  if(loading) return <Loading hasMargin/>;
-  if(error) return <Error>Error!!</Error>
+  const { data, isLoading, isError, error } = useQuery(
+    ['getMainImgs', page],
+    () => getMainImgs(page),
+    {
+      keepPreviousData: true
+    }
+  )
+
+  console.log(data);
+
+  if(isLoading) return <Loading hasMargin/>;
+  if(isError) return <Error>Error!!</Error>
 
 
-  console.log(page)
   return (
-      <GalleryContainer>
+      <GalleryContainer className='animated bounceInRight'>
         {
           searchState ? <SearchCard /> 
-          : <CardList apiData={data} loading={loading} error={error}/>
+          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal}/>
           
         }
         {/* {
-          !searchState && <div ref={getMoreImgEl}/>
-        } */}
-        {/* <div ref={getMoreImgEl}/> */}
-        {
           !searchState && <ReqMore onClick={getMoreImgHandler}>Get More Imgs</ReqMore>
+        } */}
+        {
+          !searchState && (
+            <PageHandler>
+              <Btn 
+                disabled={page <= 1}
+                onClick={() => setPage(page => page - 1)}
+              >
+                Prev
+              </Btn>
+              <PageNum>{page}</PageNum>
+              <Btn
+                onClick={() => setPage(page => page + 1)}
+              >
+                Next
+              </Btn>
+            </PageHandler>
+          )
         }
       </GalleryContainer>
   )
@@ -99,9 +75,8 @@ export default Gallery;
 
 const GalleryContainer = styled.div`
   padding: 1rem;
-  /* min-height: 100vh; */
-  /* border: 1px solid red; */
   text-align: center;
+
 `
 
 const Error = styled.div`
@@ -126,7 +101,48 @@ const ReqMore = styled.button`
   }
 `
 
+
+const PageHandler = styled.div`
+`
+const PageNum = styled.span`
+  display: inline-block;
+  margin: 0 2rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+  line-height: 1.5rem;
+`
+
 const Btn = styled.button`
-  padding: 10px 1rem;
-  margin: 0 1rem;
+  font-weight: bold;
+  border: none;
+  background-color: transparent;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, .5);
+  padding: .5rem 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #6200ee;
+  } 
+
+  &:active {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 240px) {
+    & + & {
+      margin-left: 2rem;
+    }
+  }
+  ${props => props.disabled && `
+    cursor: x;
+    &: hover {
+      color: darkgray;
+    }
+    &:active {
+      transform: scale(1);
+    }
+  `}
 `

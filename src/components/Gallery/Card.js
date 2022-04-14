@@ -7,9 +7,9 @@ import Alert from "../Alert/Alert";
 import utils from "../../utils";
 import IndividualImg from "./IndividualImg";
 
-const Card = ({ url, likes, id, url2 }) => {
+const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
   const { isLogin } = useSelector(state => state.userReducer);
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
   const text = '로그인을 해야 사용할 수 있는 기능입니다. '
 
@@ -50,6 +50,8 @@ const Card = ({ url, likes, id, url2 }) => {
         try{
           const { photo: { liked_by_user }, user } = await utils.reqLike(token, id);
           if(liked_by_user) {
+            console.log('like!')
+            setLiked(true);
             setLike(true);
           }        
   
@@ -60,6 +62,7 @@ const Card = ({ url, likes, id, url2 }) => {
         try {
           const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
           if(!liked_by_user) {
+            console.log('cancel!!')
             setLike(false);
           }
         } catch(e) {
@@ -81,14 +84,14 @@ const Card = ({ url, likes, id, url2 }) => {
         </ImgContainer>
       </CardContainer>
       {
-        modal && isLogin ? 
-          <Alert modal={modal} setModal={setModal}/> : 
-          <Alert modal={modal} setModal={setModal} text={text}/>
-      }
-      {
         zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url} url2={url2}/>
       }
       
+      {/* {
+        modal && isLogin ? 
+          <Alert modal={modal} setModal={setModal}/> : 
+          <Alert modal={modal} setModal={setModal} text={text}/>
+      } */}
     </>
   )
 }

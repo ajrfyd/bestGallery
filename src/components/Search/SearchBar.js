@@ -4,6 +4,7 @@ import { BiSearchAlt2, BiHome } from 'react-icons/bi';
 import { searchData } from '../../store/keyword';
 import { useDispatch } from 'react-redux';
 import History from "./History";
+import { useQuery } from "react-query";
 // 수정 필요
 // 로컬스토리지 -> 기간 설정, 
 // 스토리지 삭제
@@ -56,6 +57,8 @@ const SearchBar = ({ setSearchState }) => {
   const getText = (e) => {
     setText(e.target.value);
   }
+
+
 
   return (
     <SearchBarContainer>
