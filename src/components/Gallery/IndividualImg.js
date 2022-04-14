@@ -11,7 +11,7 @@ const IndividualImg = ({ setZoom, url, url2 }) => {
   }
 
   return (
-    <BackDrop className="bg" ref={bgRef} onClick={closeBgHandler}>
+    <BackDrop ref={bgRef} onClick={closeBgHandler} >
       {/* <ImgContainer> */}
         {/* <ImgContainer > */}
           <Close onClick={() => setZoom(false)}>
@@ -32,6 +32,7 @@ const BackDrop = styled.div`
   width: 30px;
   height: 30px;
   /* border-radius: 50%; */
+  
   top: 50%;
   left: 50%;
 
@@ -42,16 +43,17 @@ const BackDrop = styled.div`
   align-items: center;
   
   
-  
   @keyframes zoom {
     0% {
-      box-shadow: 0 0 0 transparent;
+      /* box-shadow: 0 0 0 transparent; */
     }
     100% {
-      box-shadow: 0 0 0 15000vh #eee;
+      /* box-shadow: 0 0 0 15000vh #eee; */
       border-radius: 0;
       top: 0;
       left: 0;
+      right: 0;
+      bottom: 0;
       width: 100%;
       height: 100%;
     }

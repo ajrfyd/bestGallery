@@ -15,7 +15,7 @@ const Alert = ({ modal, setModal, text = '' }) => {
   return (
     
     <BackGround style={{ display: display }} onClick={closeModalHandler} ref={bgRef} >
-      <Modal >
+      <Modal className="animated bounceInDown">
         <ClearBtn onClick={() => setModal(false)}>
           ❌
         </ClearBtn>
@@ -59,58 +59,7 @@ const Modal = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* transition: .5s;  */
-  /* animation: modal .5s ease; */
-  animation-name: bounceInDown;
-  -webkit-animation-duration: .5s;
-  animation-duration: .5s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-
-  
-  @keyframes bounceInDown {
-    0%, 100%, 60%, 75%, 90% {
-      -webkit-transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-    0% {
-      opacity: 0;
-      -webkit-transform: translate3d(0, -3000px, 0);
-      -ms-transform: translate3d(0, -3000px, 0);
-      transform: translate3d(0, -3000px, 0)
-    }
-    60% {
-      opacity: 1;
-      -webkit-transform: translate3d(0, 25px, 0);
-      -ms-transform: translate3d(0, 25px, 0);
-      transform: translate3d(0, 25px, 0)
-    }
-    75% {
-      -webkit-transform: translate3d(0, -10px, 0);
-      -ms-transform: translate3d(0, -10px, 0);
-      transform: translate3d(0, -10px, 0)
-    }
-    90% {
-      -webkit-transform: translate3d(0, 5px, 0);
-      -ms-transform: translate3d(0, 5px, 0);
-      transform: translate3d(0, 5px, 0)
-    }
-    100% {
-      -webkit-transform: none;
-      -ms-transform: none;
-      transform: none
-    } 
-
-    /* @keyframes modal {
-      0% {
-        transform: scale(0);
-      }
-      100% {
-        transfrom: scale(1);
-      }
-    } */
-
-}
+  animation-duration: .5s ;
 `
 
 const ClearBtn = styled.button`

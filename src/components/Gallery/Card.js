@@ -86,12 +86,6 @@ const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
       {
         zoom && <IndividualImg top={position.top} left={position.left} setZoom={setZoom} url={url} url2={url2}/>
       }
-      
-      {/* {
-        modal && isLogin ? 
-          <Alert modal={modal} setModal={setModal}/> : 
-          <Alert modal={modal} setModal={setModal} text={text}/>
-      } */}
     </>
   )
 }
@@ -105,7 +99,7 @@ const CardContainer = styled.div`
 
 const ImgContainer = styled.div`
   position: relative;
-  break-inside: avoid;
+  /* break-inside: avoid; */
   /* overflow: hidden; */
   
   &:hover div {

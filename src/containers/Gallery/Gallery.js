@@ -40,7 +40,7 @@ const Gallery = ({ apiData, searchState, setModal }) => {
 
 
   return (
-      <GalleryContainer className='animated bounceInRight'>
+      <GalleryContainer className='animated bounceInLeft'>
         {
           searchState ? <SearchCard /> 
           : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal}/>

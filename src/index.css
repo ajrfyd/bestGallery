@@ -25,8 +25,8 @@ a {
 .animated {
   animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+  /* -webkit-animation-fill-mode: both;
+  animation-fill-mode: both; */
 }
 
 .bounceInRight {
@@ -109,7 +109,10 @@ a {
 
 .bounceOutRight {
   -webkit-animation-name: bounceOutRight;
-  animation-name: bounceOutRight
+  animation-name: bounceOutRight;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  
 }
 @keyframes bounceOutRight {
   20% {
@@ -128,7 +131,9 @@ a {
 
 .bounceOutLeft {
   -webkit-animation-name: bounceOutLeft;
-  animation-name: bounceOutLeft
+  animation-name: bounceOutLeft;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
 }
 
 @keyframes bounceOutLeft {
