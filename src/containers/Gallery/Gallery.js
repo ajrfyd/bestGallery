@@ -18,7 +18,8 @@ const Gallery = ({ apiData, searchState, setModal }) => {
     ['getMainImgs', page],
     () => utils.getMainImgs(page),
     {
-      keepPreviousData: true
+      // keepPreviousData: true,
+      cacheTime: 0
     }
     )
 

@@ -13,7 +13,7 @@ const CardList = ({ apiData, loading, error, setLiked, setModal, dir, page, isFe
   const [localVisible, setLocalVisible] = useState(isFetched);
   
   const animation = animate
-  ? (dir === 'left' ? 'bounceOutLeft' : 'bounceOutRight')
+  ? (dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight')
   : (dir === 'left' ? 'bounceInLeft' : 'bounceInRight');
   
   
