@@ -31,6 +31,7 @@ const App = () => {
     window.history.replaceState({}, null, window.location.pathname);
   }
 
+  const closeHandler = () => setModal(false);
   
 
   useEffect(() => {
@@ -47,7 +48,6 @@ const App = () => {
     }
   }, [])
 
-
   return (
     <QueryClientProvider client={queryClient}>
       <Container>
@@ -56,7 +56,8 @@ const App = () => {
         <Gallery searchState={searchState} setModal={setModal}/>
         {/* <Test /> */}
         {/* <InfTest /> */}
-        { modal && !isLogin && <Alert modal={modal} setModal={setModal} text='로그인이 필요한 기능입니다'/>}
+        {/* { modal && !isLogin && <Alert modal={modal} setModal={setModal} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>} */}
+        <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
       </Container>
       <ReactQueryDevtools />
     </QueryClientProvider>

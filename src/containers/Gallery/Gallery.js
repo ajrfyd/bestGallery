@@ -7,43 +7,31 @@ import { getImgs } from "../../store/data";
 import Loading from "../../components/Loading/Loading";
 import { useQuery } from "react-query";
 import axios from "axios";
+import utils from "../../utils";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const [page, setPage] = useState(1);
   const [liked, setLiked] = useState(false);
-  const [animate, setAnimate] = useState({
-    ani: true,
-    dir: 'right',
-  })
-
-  const { ani, dir } = animate;
-
+  const [dir, setDir] = useState('right');
   
-  const getMainImgs = async (page) => {
-    const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=30`
-    const res = await axios.get(API);
-    return res;
-  }
-
-  const { data, isLoading, isError, error } = useQuery(
+  const { data, isLoading, isError, error, isFetched } = useQuery(
     ['getMainImgs', page],
-    () => getMainImgs(page),
+    () => utils.getMainImgs(page),
     {
       keepPreviousData: true
     }
-  )
+    )
 
-  console.log(data);
-
+  
   if(isLoading) return <Loading hasMargin/>;
   if(isError) return <Error>Error!!</Error>
 
 
   return (
-      <GalleryContainer className='animated bounceInLeft'>
+      <GalleryContainer >
         {
           searchState ? <SearchCard /> 
-          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal}/>
+          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched}/>
           
         }
         {/* {
@@ -54,13 +42,21 @@ const Gallery = ({ apiData, searchState, setModal }) => {
             <PageHandler>
               <Btn 
                 disabled={page <= 1}
-                onClick={() => setPage(page => page - 1)}
+                onClick={() => {
+                  setPage(page => page - 1);
+                  // setAnimate(false);
+                  setDir('left');
+                }}
               >
                 Prev
               </Btn>
               <PageNum>{page}</PageNum>
               <Btn
-                onClick={() => setPage(page => page + 1)}
+                onClick={() => {
+                  setPage(page => page + 1);
+                  // setAnimate(false);
+                  setDir('right');
+                }}
               >
                 Next
               </Btn>

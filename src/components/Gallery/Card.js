@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import axios from "axios";
@@ -12,7 +12,13 @@ const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
   // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
   const text = '로그인을 해야 사용할 수 있는 기능입니다. '
+  useEffect(() => { 
+    // console.log('mount');
 
+    return () => {
+      // console.log('unmount')
+    }
+  }, [])
   const [zoom, setZoom] = useState(false);
   const [position, setPosition] = useState({
     top: 0,

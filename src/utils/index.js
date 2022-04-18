@@ -73,6 +73,10 @@ export default {
       { id }
       )
     return data;
-
+  },
+  getMainImgs: async (page) => {
+    const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=30`
+    const res = await axios.get(API);
+    return res;
   }
 }

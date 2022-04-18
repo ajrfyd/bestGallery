@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import styled from 'styled-components';
+import React, { useRef, useEffect, useState } from "react";
+import styled, { css } from 'styled-components';
 import Card from "./Card";
 import Loading from "../Loading/Loading";
 
@@ -7,17 +7,33 @@ import useInfiniteScroll from "../../utils/useInfiniteScroll";
 
 
 
-const CardList = ({ apiData, loading, error, setLiked, setModal }) => {
+const CardList = ({ apiData, loading, error, setLiked, setModal, dir, page, isFetched }) => {
 
-  if(loading) {
-    return <Loading />
-  }
+  const [animate, setAnimate] = useState(false);
+  const [localVisible, setLocalVisible] = useState(isFetched);
+  
+  const animation = animate
+  ? (dir === 'left' ? 'bounceOutLeft' : 'bounceOutRight')
+  : (dir === 'left' ? 'bounceInLeft' : 'bounceInRight');
+  
+  
+  useEffect(() => {
+    if(localVisible && !isFetched) {
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 500)
+    }
+    setLocalVisible(isFetched);
+  }, [localVisible, isFetched])
 
-
+  if(!animate && !localVisible && !isFetched) return null;
+  if(loading) return <Loading />
 
   return (
     <>
-      <CardListContainer>
+      <CardListContainer 
+        className={`animated ${animation}`}
+        disapperar={!isFetched}
+      >
         {
           apiData ? apiData.map(data => (
             <Card 
@@ -87,6 +103,8 @@ const CardListContainer = styled.div`
     column-count: 1;
     column-gap: 0;
   }
-
+  ${props => props.disapperar && css`
+    animation-name: bounceOutRight;
+  `}
 `
 
