@@ -22,7 +22,7 @@ const Alert = ({ modal, closeHandler, text = '', isLogin }) => {
     setLocalVisible(modal);
   }, [localVislble, modal])
 
-  if(!localVislble && !animate && !isLogin) return null;
+  if(!localVislble && !animate) return null;
 
   return (
     

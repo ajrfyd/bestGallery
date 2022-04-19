@@ -77,7 +77,7 @@ const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
       }
     }
   }
-
+  
   return (
     <>
       <CardContainer>
@@ -97,6 +97,8 @@ const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
 }
 
 export default Card;
+
+
 const CardContainer = styled.div`
   display: flex;
   justify-content: center;
