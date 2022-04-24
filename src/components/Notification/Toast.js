@@ -36,8 +36,13 @@ const Container = styled.div`
   transition: .3s ease;
 
   padding: .5rem 1rem;
-  border-radius: 2px;
+  border-radius: 4px;
   margin: 1rem 0;
+  
+  &.fadeOut {
+    opacity: 0;
+    transform: opacity 3s;
+  }
 
   @keyframes fadeInLeft {
     0% {
@@ -48,8 +53,4 @@ const Container = styled.div`
     }
   }
 
-  .fadeOut {
-    opacity: 0;
-    transform: opacity .2s;
-  }
 `
