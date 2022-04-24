@@ -4,6 +4,7 @@ import { BiSearchAlt2, BiHome } from 'react-icons/bi';
 import { searchData } from '../../store/keyword';
 import { useDispatch } from 'react-redux';
 import History from "./History";
+import { notify } from "../../store/notify";
 // 수정 필요
 // 로컬스토리지 -> 기간 설정, 
 // 스토리지 삭제
@@ -40,7 +41,8 @@ const SearchBar = ({ setSearchState }) => {
   const search = async (e) => {
     e.preventDefault();
     if(text === '') {
-      alert('검색어를 입력하지 않았습니다.')
+      // alert('검색어를 입력하지 않았습니다.')
+      dispatch(notify('검색어를 입력해 주세요'))
       return
     }
     setOnHistory(false);

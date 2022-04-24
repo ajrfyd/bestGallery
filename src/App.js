@@ -11,6 +11,7 @@ import Alert from "./components/Alert/Alert";
 import { QueryClient, QueryClientProvider } from "react-query";
 import InfTest from "./components/Test/InfTest";
 import { ReactQueryDevtools } from 'react-query/devtools';
+import Notification from "./components/Notification/Notification";
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -60,6 +61,7 @@ const App = () => {
         <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
       </Container>
       <ReactQueryDevtools />
+      <Notification />
     </QueryClientProvider>
   )
 }
