@@ -1,38 +1,99 @@
-import React, { useRef, useEffect, useState } from "react";
-import styled, { css } from 'styled-components';
+import React, { useEffect, useState } from "react";
+import styled, { css, keyframes } from 'styled-components';
 import Card from "./Card";
+import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
 import useInfiniteScroll from "../../utils/useInfiniteScroll";
 
 
 
-const CardList = ({ apiData, loading, error, setLiked, setModal, dir, page, isFetched }) => {
+const CardList = ({ apiData, isLoading, error, setLiked, setModal, dir, page, isFetched, visible, liked }) => {
+  //! Prev
+  // const [animate, setAnimate] = useState(false);
+  // const [localVisible, setLocalVisible] = useState(isFetched);
+  
+  // const animation = animate
+  // ? (dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight')
+  // : (dir === 'left' ? 'bounceInLeft' : 'bounceInRight');
+  
+  
+  // useEffect(() => {
+  //   if(localVisible && !isFetched) {
+  //     setAnimate(true);
+  //     setTimeout(() => setAnimate(false), 500)
+  //   }
+  //   setLocalVisible(isFetched);
+  // }, [localVisible, isFetched])
 
+  // if(!animate && !localVisible && !isFetched) return null;
+  // if(loading) return <Loading />
+  // const { pageNum } = useSelector(state => state.keywordReducer);
+  // console.log(pageNum);
+
+  //! 2nd
+  // const [appear, setAppear] = useState(false);
+  // const [localState, setLocalState] = useState(appear);
+  // const [animate, setAnimate] = useState(false);
+
+  // console.log(visible);
+  // useEffect(() => {
+  //   setAppear(true);
+  // }, [page]);
+
+  // useEffect(() => {
+  //   if(!appear && localState) {
+  //     setAnimate(true);
+  //     setTimeout(() => {
+  //       console.log('asdasdas')
+  //       setAnimate(false)
+  //     }, 1000)
+  //   }
+  //   setLocalState(appear);
+  // }, [localState, appear])
+
+  // if(!animate && !appear) return null;
+
+  //!!!!!!! 
+
+  const [localState, setLocalState] = useState(visible);
   const [animate, setAnimate] = useState(false);
-  const [localVisible, setLocalVisible] = useState(isFetched);
-  
-  const animation = animate
-  ? (dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight')
-  : (dir === 'left' ? 'bounceInLeft' : 'bounceInRight');
-  
+  // console.log('%cLocalState', 'color: red', localState);
   
   useEffect(() => {
-    if(localVisible && !isFetched) {
+    console.log(visible)
+    if(localState && !visible) {
       setAnimate(true);
-      setTimeout(() => setAnimate(false), 500)
+      console.log('%cAnimation start', 'color: red');
+      setTimeout(() =>  {
+        console.log('asdasd')
+        setAnimate(false);
+      }, 1000);
     }
-    setLocalVisible(isFetched);
-  }, [localVisible, isFetched])
+    setLocalState(visible);
+  }, [visible, localState])
 
-  if(!animate && !localVisible && !isFetched) return null;
-  if(loading) return <Loading />
+  useEffect(() => {
+    return () => {
+    if(!visible) {
+      // setVisible(prev => !prev);
+      // setAnimate(true);
+      // console.log('%cunmount!', '#fff')
+      // setTimeout(() => setAnimate(false), 250);
+    }
+    }
+  }, [])
+
+
+  if(!animate && !localState) return null;
 
   return (
     <>
       <CardListContainer 
-        className={`animated ${animation}`}
-        disapperar={!isFetched}
+        // className={`animated ${animation}`}
+        // disapperar={!isFetched}
+        disappear={!visible}
+        dir={dir}
       >
         {
           apiData ? apiData.map(data => (
@@ -54,9 +115,15 @@ const CardList = ({ apiData, loading, error, setLiked, setModal, dir, page, isFe
 
 export default CardList;
 
-
 const CardListContainer = styled.div`
   line-height: 0;
+  animation-duration: 1.2s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  ${({dir}) => dir && css`
+    animation-name: ${dir === 'right' ? 'bounceInRight' : 'bounceInLeft'};
+  `}
+
 
   @media (max-width: 2000px) {
     -webkit-column-count: 5;
@@ -103,8 +170,12 @@ const CardListContainer = styled.div`
     column-count: 1;
     column-gap: 0;
   }
-  ${props => props.disapperar && css`
+  /* ${props => props.disapperar && css`
     animation-name: bounceOutRight;
+  `} */
+
+  ${({disappear, dir}) => disappear && dir && css`
+    animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
   `}
 `
 

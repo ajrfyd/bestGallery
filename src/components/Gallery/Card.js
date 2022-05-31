@@ -6,8 +6,9 @@ import { useSelector } from "react-redux";
 import Alert from "../Alert/Alert";
 import utils from "../../utils";
 import IndividualImg from "./IndividualImg";
+import { useQuery } from "react-query";
 
-const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
+const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
@@ -78,11 +79,14 @@ const Card = ({ url, likes, id, url2, setLiked, setModal }) => {
     }
   }
   
+  // const {data} = useQuery('like', () => Utils.getMainImgs(1), {enabled: liked})
+
+
   return (
     <>
       <CardContainer>
         <ImgContainer>
-          <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick}/>
+          <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick} />
           <Utils>
             <FaRegThumbsUp onClick={reqLikes} style={{ color: like ? 'red' : 'blue' }}/>
             <Likes > &times; {likes}</Likes>

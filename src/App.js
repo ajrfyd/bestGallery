@@ -60,8 +60,8 @@ const App = () => {
         {/* { modal && !isLogin && <Alert modal={modal} setModal={setModal} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>} */}
         <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
       </Container>
-      <ReactQueryDevtools />
       <Notification />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }

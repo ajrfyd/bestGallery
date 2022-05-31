@@ -6,7 +6,6 @@ import styled from 'styled-components';
 const Notification = () => {
   const { notification } = useSelector(state => state.notifyReducer);
 
-
   return (
     <NotificationContainer>
       {

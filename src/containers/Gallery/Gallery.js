@@ -8,6 +8,7 @@ import Loading from "../../components/Loading/Loading";
 import { useQuery } from "react-query";
 import axios from "axios";
 import utils from "../../utils";
+import InfiniteSearch from "../../components/Gallery/InfiniteSearch";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const [page, setPage] = useState(1);
@@ -19,11 +20,46 @@ const Gallery = ({ apiData, searchState, setModal }) => {
     () => utils.getMainImgs(page),
     {
       // keepPreviousData: true,
-      cacheTime: 0
+      cacheTime: 0,
+      // enabled: !!liked
     }
     )
 
-  
+    const [visible, setVisible] = useState(false);
+    
+    useEffect(() => {
+      if(!isLoading && data) {
+        setVisible(true)
+      }
+    }, [isLoading, data])
+
+    // useEffect(() => {
+    //   utils.getMainImgs();
+    // }, [liked])
+    // console.log(visible);
+    // useEffect(() => {
+    //   setVisible(true)
+
+    //   return() => {
+    //     console.log('%cGallary Unmount', 'color: blue');
+    //   }
+    // }, []);
+
+    const prevHandler = () => {
+      setPage(page => page - 1);
+      setVisible(false);
+      setDir('left');
+    }
+
+    const nextHandler = () => {
+      setPage(page => page + 1);
+      setVisible(false);
+      setDir('right');
+    }
+
+    // console.log(visible)
+
+
   if(isLoading) return <Loading hasMargin/>;
   if(isError) return <Error>Error!!</Error>
 
@@ -32,32 +68,25 @@ const Gallery = ({ apiData, searchState, setModal }) => {
       <GalleryContainer >
         {
           searchState ? <SearchCard /> 
-          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched}/>
+          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched} isLoading={isLoading} visible={visible} setVisible={setVisible} liked={liked}/>
           
         }
         {/* {
-          !searchState && <ReqMore onClick={getMoreImgHandler}>Get More Imgs</ReqMore>
+          searchState ? <InfiniteSearch /> 
+          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched}/>
         } */}
         {
           !searchState && (
             <PageHandler>
               <Btn 
                 disabled={page <= 1}
-                onClick={() => {
-                  setPage(page => page - 1);
-                  // setAnimate(false);
-                  setDir('left');
-                }}
+                onClick={prevHandler}
               >
                 Prev
               </Btn>
               <PageNum>{page}</PageNum>
               <Btn
-                onClick={() => {
-                  setPage(page => page + 1);
-                  // setAnimate(false);
-                  setDir('right');
-                }}
+                onClick={nextHandler}
               >
                 Next
               </Btn>

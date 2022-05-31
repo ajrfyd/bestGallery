@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 import Card from "./Card";
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,24 +6,60 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { searchData, getPage } from '../../store/keyword';
 import Pagination from "./Pagination";
 import Loading from "../Loading/Loading";
-import { useQuery } from 'react-query'
+import { useQuery, useInfiniteQuery } from 'react-query'
+import utils from "../../utils";
+import axios from "axios";
 
 const SearchCard = () => {
   const { loading, data, error, pageNum, keyword } = useSelector(state => state.keywordReducer);
-  // const [page, setPage] = useState(1);
-
+  const targetRef = useRef(null);
+  
   const dispatch = useDispatch();
   
   const requestPage = (page) => {
     dispatch(searchData(keyword, page))
   }
-
   
+  
+  // // !!Infinite practice 
+  // const [page, setPage] = useState(1);
+
+  // const pageHandler = () => {
+  //   setPage(page => page + 1);
+
+  // }
+
+  // const url = `https://api.unsplash.com/search/photos?page=${pageNum}&query=${keyword}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+  // const reqData = ({ pageParam = page }) => axios.get(`https://api.unsplash.com/search/photos?page=${pageParam}&query=${keyword}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`).then(res => res?.data);
+  // const { data: data2, error: error2, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery(
+  //   [keyword, pageNum],
+  //   reqData,
+  //   {
+  //     getNextPageParam: (lastPage, page) => {
+  //       console.log(lastPage)
+  //       return page;
+  //     }
+  //   }
+  // )
+
+  // const onIntersect = (entries, observer) => {
+  //   if(!entries[0].isIntersecting) return;
+  //   entries[0].isIntersecting && pageHandler();
+  //   fetchNextPage();
+  // }
+  // console.log(page);
+
+  // utils.useObserver({
+  //   target: targetRef,
+  //   onIntersect
+  // })
+  
+  // console.log(data2);
+  // !!
   if(loading) return <Loading hasMargin/>
   if(error) {
     console.log(error.response.status)
   }
-  console.log(data)
 
 
 
@@ -35,8 +71,16 @@ const SearchCard = () => {
             <Card key={item.id} url={item.url} likes={item.likes} url2={item.url}/>
           )) : null
         }
+        {/* {
+          status === 'success' && data2.pages[0].results.map((info, idx) => (
+            <div key={idx} >
+              {info.id}
+            </div>
+          ))
+        } */}
       </SearchCardContainer>
-      <Pagination page={pageNum} requestPage={requestPage}/>
+      <div ref={targetRef}/>
+      {/* <Pagination page={pageNum} requestPage={requestPage}/> */}
     </>
   )
 }

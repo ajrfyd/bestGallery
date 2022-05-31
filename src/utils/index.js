@@ -78,5 +78,29 @@ export default {
     const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=15`
     const res = await axios.get(API);
     return res;
+  },
+  useObserver: ({ 
+    target, 
+    onIntersect, 
+    root = null, 
+    rootMargin = '0px',
+    threshold = '1.0'
+  }) => {
+    useEffect(() => {
+      let observer;
+      if(target && target.current) {
+        observer = new IntersectionObserver(onIntersect, {
+          root,
+          rootMargin,
+          threshold
+        })
+
+        observer.observe(target.current);
+      }
+      return () => {
+        observer && observer.disconnect();
+      }
+
+    }, [target, rootMargin, threshold])
   }
 }
