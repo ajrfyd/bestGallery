@@ -102,7 +102,6 @@ export default Gallery;
 const GalleryContainer = styled.div`
   padding: 1rem;
   text-align: center;
-
 `
 
 const Error = styled.div`
