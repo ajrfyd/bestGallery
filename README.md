@@ -1,7 +1,7 @@
 ## BestGallery
 
 ### 진행중인 기능 
-- infinite scroll~~~
+- ~~~infinite scroll~~~
 - 언마운트 애니메이션
 
 
@@ -50,3 +50,11 @@ export const useObserver = ({
       next: pageParam + 1
   }
 ```
+
+4. 무한 스크롤 문제점
+```js
+  // if(status === 'loading') return <Loading hasMargin/>
+```
+- return 전에 저런식으로 상태에 따라 로딩을 보여주면 
+- 무한스크롤이 진행되지 않는다.
+- 왜?? 요놈 때문에 고생
