@@ -72,26 +72,22 @@ const Gallery = ({ apiData, searchState, setModal }) => {
           isLoading && <Loading />
         }
         {
-          data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal}/>
+          data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal} visible={visible} dir={dir}/>
         }
-        {
-          !searchState && (
-            <PageHandler>
-              <Btn 
-                disabled={page <= 1}
-                onClick={prevHandler}
-              >
-                Prev
-              </Btn>
-              <PageNum>{page}</PageNum>
-              <Btn
-                onClick={nextHandler}
-              >
-                Next
-              </Btn>
-            </PageHandler>
-          )
-        }
+        <PageHandler>
+          <Btn 
+            disabled={page <= 1}
+            onClick={prevHandler}
+          >
+            Prev
+          </Btn>
+          <PageNum>{page}</PageNum>
+          <Btn
+            onClick={nextHandler}
+          >
+            Next
+          </Btn>
+        </PageHandler>
       </GalleryContainer>
   )
 }

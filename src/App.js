@@ -13,6 +13,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import SearchCard from "./components/Gallery/ SearchCard";
 import TopComponent from "./page/TopComponent";
+import CardContainer from "./components/Gallery/CardContainer";
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -60,6 +61,7 @@ const App = () => {
           {/* <Route element={<TopComponent/>}> */}
             <Route path='/' element={<Home isLogin={isLogin}/>}/>
             <Route path='/search/:keyword' element={<SearchCard />}/>
+            <Route path='/page/:pageNum' element={<CardContainer/>}/>
           {/* </Route> */}
         </Routes>
       </Container>

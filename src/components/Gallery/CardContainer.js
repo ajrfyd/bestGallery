@@ -1,18 +1,28 @@
-import React from "react";
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled, { keyframes, css } from 'styled-components';
 import Card from "./Card";
 
-const CardContainer = ({ apiData, setLiked, setModal }) => {
-  console.log(apiData);
+const CardContainer = ({ apiData, setLiked, setModal, visible, dir }) => {
   const { data } = apiData;
-  console.log(data);
+  const [localState, setLocalState] = useState(visible);
+  const [animate, setAnimate] = useState(false);
+  // const [dir, setDir] = useState('left');
 
-  // { url, likes, id, url2, setLiked, setModal, liked }
+  useEffect(() => {
+    if(!visible && localState) {
+      setAnimate(true);
+      console.log('Animate!')
+      setTimeout(() => setAnimate(false), 250);
+    }
+
+    setLocalState(visible);
+  }, [visible, localState])
+
   return (
-    <Container>
+    <Container disappear={animate} dir={dir}>
       {
         data.map(item => (
-          <Card key={item.id} url={item.urls.small} likes={item.likes} id={item.id} setLiked={setLiked} setModal={setModal}/>
+          <Card key={item.id} url={item.urls.small} likes={item.likes} id={item.id} setLiked={setLiked} setModal={setModal} url2={item.urls.small_s3}/>
         ))
       }
     </Container>
@@ -28,4 +38,17 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+
+  animation-fill-mode: both;
+  animation-duration: 1.2s;
+  animation-name: bounceInRight;
+  
+  ${({ dir }) => dir && css`
+    animation-name: ${dir === 'right' ? 'bounceInRight' : 'bounceInLeft'};
+  `}
+
+  ${({ disappear, dir }) => disappear && dir && css`
+    animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
+  `}
+
 `

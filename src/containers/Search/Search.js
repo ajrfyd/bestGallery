@@ -19,4 +19,7 @@ const SearchContainer = styled.div`
   padding: .5rem 1rem;
   /* border-bottom: 1px solid #000; */
   box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `

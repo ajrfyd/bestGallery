@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Gallery from "../containers/Gallery/Gallery";
 import Alert from "../components/Alert/Alert";
+// import { useNavigate } from "react-router-dom";
 
 const Home = ({ isLogin }) => {
   const [modal, setModal] = useState(false);
 
   const closeHandler = () => setModal(false);
+
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   navigate('/page/1');
+  // }, [])
 
   return (
     <Container>

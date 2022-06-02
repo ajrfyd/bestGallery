@@ -24,6 +24,9 @@ const HeaderContainer = styled.header`
   padding: 0 1rem;
   justify-content: space-between;
   align-items: center;
+  /* position: sticky; */
+  /* top: 0; */
+  /* z-index: 1; */
 
   @media (max-width: 1150px) {
     flex-direction: column;
