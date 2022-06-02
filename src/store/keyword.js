@@ -28,7 +28,7 @@ export const searchData = (key, page = 1) => async dispatch => {
         "Cache-Control": "public, max-age=600",
       }
     });
-    console.log(data)
+    // console.log(data)
     if(data) {
       const imgData = utils.keywordSearch(data);
 

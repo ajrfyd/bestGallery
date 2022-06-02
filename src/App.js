@@ -12,6 +12,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import InfTest from "./components/Test/InfTest";
 import { ReactQueryDevtools } from 'react-query/devtools';
 import Notification from "./components/Notification/Notification";
+import { Routes, Route } from "react-router-dom";
+import Home from "./page/Home";
+import SearchCard from "./components/Gallery/ SearchCard";
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -54,11 +57,11 @@ const App = () => {
       <Container>
         <Header user={user} loading={loading} isLogin={isLogin}/>
         <Search setSearchState={setSearchState} />
-        <Gallery searchState={searchState} setModal={setModal}/>
-        {/* <Test /> */}
-        {/* <InfTest /> */}
-        {/* { modal && !isLogin && <Alert modal={modal} setModal={setModal} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>} */}
         <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
+        <Routes>
+          <Route path='/' element={<Home />}/>
+          <Route path='/search/:keyword' element={<SearchCard />}/>
+        </Routes>
       </Container>
       <Notification />
       <ReactQueryDevtools />

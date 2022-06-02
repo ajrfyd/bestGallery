@@ -5,6 +5,7 @@ import { searchData } from '../../store/keyword';
 import { useDispatch } from 'react-redux';
 import History from "./History";
 import { notify } from "../../store/notify";
+import { useNavigate } from "react-router-dom";
 // 수정 필요
 // 로컬스토리지 -> 기간 설정, 
 // 스토리지 삭제
@@ -13,7 +14,9 @@ const SearchBar = ({ setSearchState }) => {
   const [text, setText] = useState('');
   const [onHistory, setOnHistory] = useState(false);
   const dispatch = useDispatch();
-  const inputRef = useRef();
+  const inputRef = useRef(null);
+  const textRef = useRef('');
+  const navigate = useNavigate();
 
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]'),
@@ -51,14 +54,15 @@ const SearchBar = ({ setSearchState }) => {
     if(!hasKeyword) {
       saveKeyword(text)
     }
-    dispatch(searchData(text))
+    navigate(`/search/${text}`);
+    // dispatch(searchData(text))
+
     setSearchState(true);
   }
 
   const getText = (e) => {
     setText(e.target.value);
   }
-
 
 
   return (
@@ -68,10 +72,11 @@ const SearchBar = ({ setSearchState }) => {
           <BiHome className="home" size={45} onClick={() => {
             setText('');
             setOnHistory(false);
-            setSearchState(false);
+            // setSearchState(false);
+            navigate('/')
           }}/>
         </HomeIcon>
-        <Input placeholder="Search" value={text} onChange={getText} onClick={() => setOnHistory(true)} ref={inputRef}/>
+        <Input placeholder="Search" value={text} onChange={getText} onClick={() => setOnHistory(true)} ref={inputRef} />
         <SearchIcon>
           <BiSearchAlt2 size={50} onClick={search}/>
         </SearchIcon>

@@ -9,23 +9,26 @@ import Loading from "../Loading/Loading";
 import { useQuery, useInfiniteQuery } from 'react-query'
 import utils from "../../utils";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const SearchCard = () => {
-  const { loading, error, pageNum, keyword } = useSelector(state => state.keywordReducer);
+  // const { loading, pageNum, keyword } = useSelector(state => state.keywordReducer);
   const targetRef = useRef(null);
+  const { keyword } = useParams();
+  console.log(keyword);
   
   // // !!Infinite practice 
   const reqData = async ({ pageParam = 1 }) => {
     const { data } = await axios.get(`https://api.unsplash.com/search/photos?page=${pageParam}&query=${keyword}&per_page=30&client_id=${process.env.REACT_APP_ACCESS_KEY}`);
-    // console.log(data);
-    console.log(pageParam);
+    // console.log(keyword);
+    // console.log(pageParam);
     return {
       result: data.results,
       next: pageParam + 1
     }
   };
 
-  const { data, error: error2, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery(
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery(
     [keyword],
     reqData,
     {
@@ -40,38 +43,43 @@ const SearchCard = () => {
   const onIntersect = (entries, observer) => {
     if(!entries[0].isIntersecting) return;
     entries[0].isIntersecting && fetchNextPage();
+    console.log('asdadsasasd')
   }
 
   utils.useObserver({
     target: targetRef,
-    onIntersect
+    onIntersect,
   })
   
   // console.log(data);
   // !!
-  if(loading) return <Loading hasMargin/>
+  // if(status === 'loading') return <Loading hasMargin/>
 
   return (
-    <>
+    <SearchCardContainer>
       {
         status === 'success' && data.pages.map((data, idx) => (
-          <SearchCardContainer key={idx}>
-            {
-              data.result.map(item => (
-                <img src={item.urls.small} alt="" key={item.id}/>
-              ))
-            }
-          </SearchCardContainer>
+            <React.Fragment key={idx}>
+              {
+                data.result.map((item, idx) => {
+                  // console.log(item)
+                  const { id, urls } = item;
+                  // console.log(id, urls.thumb)
+                  return ( 
+                    <React.Fragment key={urls.thumb}>
+                      <img src={item.urls.small} alt=""  style={{ width: '100%', height: '100%'}}/>
+                    </React.Fragment>
+                  )
+                })
+              }
+            </React.Fragment>
         ))
       }
-      <div ref={targetRef}/>
       {
         isFetchingNextPage && <Loading />
       }
-      {
-        status === 'error' && <div>ErroR!!!!</div>
-      }
-    </>
+      <div ref={targetRef} />
+    </SearchCardContainer>
   )
 }
 
@@ -84,7 +92,9 @@ const SearchCardContainer = styled.div`
   /* grid-template-columns: repeat(5, 1fr); */
   gap: 10px;
   overflow: hidden;
-
+  /* border: 5px solid red; */
+  padding: 1rem;
+  
   & > img {
     width: 100%;
     height: 100%;
@@ -93,6 +103,6 @@ const SearchCardContainer = styled.div`
 
   & + & {
     margin-top: 1rem;
-  }
-`
+  }  
 
+`

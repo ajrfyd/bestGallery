@@ -84,7 +84,7 @@ export default {
     onIntersect, 
     root = null, 
     rootMargin = '0px',
-    threshold = '1.0'
+    threshold = 0.5
   }) => {
     useEffect(() => {
       let observer;

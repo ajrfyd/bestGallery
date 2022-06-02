@@ -34,6 +34,7 @@ const LoadingSpinner = styled.section`
   align-items: center;
   background-color: transparent;
   animation: aniColor 1s linear infinite;
+  /* border: 5px dotted red; */
 
   @keyframes aniColor {
     0% {
