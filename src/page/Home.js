@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { reqUser } from "../store/user"
 import styled from "styled-components";
 import Gallery from "../containers/Gallery/Gallery";
-
+import { getKeyword, delKeyword } from "../store/keyword";
 
 const Home = () => {
 

@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 import Card from "./Card";
-import { useSelector, useDispatch } from 'react-redux';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { searchData, getPage } from '../../store/keyword';
-import Pagination from "./Pagination";
 import Loading from "../Loading/Loading";
 import { useQuery, useInfiniteQuery } from 'react-query'
 import utils from "../../utils";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import LazyLoadCard from "./LazyLoadCard";
 
 const SearchCard = () => {
-  // const { loading, pageNum, keyword } = useSelector(state => state.keywordReducer);
   const targetRef = useRef(null);
   const { keyword } = useParams();
-  console.log(keyword);
   
   // // !!Infinite practice 
   const reqData = async ({ pageParam = 1 }) => {
@@ -43,7 +38,6 @@ const SearchCard = () => {
   const onIntersect = (entries, observer) => {
     if(!entries[0].isIntersecting) return;
     entries[0].isIntersecting && fetchNextPage();
-    console.log('asdadsasasd')
   }
 
   utils.useObserver({
@@ -51,58 +45,58 @@ const SearchCard = () => {
     onIntersect,
   })
   
-  // console.log(data);
-  // !!
+  // !! 이런 식으로 로딩중에 덮어 버리면 무한 스크롤이 작동하지 않는다..
   // if(status === 'loading') return <Loading hasMargin/>
 
   return (
-    <SearchCardContainer>
+    <Container>
       {
-        status === 'success' && data.pages.map((data, idx) => (
-            <React.Fragment key={idx}>
-              {
-                data.result.map((item, idx) => {
-                  // console.log(item)
-                  const { id, urls } = item;
-                  // console.log(id, urls.thumb)
-                  return ( 
-                    <React.Fragment key={urls.thumb}>
-                      <img src={item.urls.small} alt=""  style={{ width: '100%', height: '100%'}}/>
-                    </React.Fragment>
-                  )
-                })
-              }
-            </React.Fragment>
-        ))
+        status === 'loading' && <Loading stlye={{ marginTop: '5rem' }}/>
       }
+      <SearchContainer>
+        {
+          status === 'success' && data.pages.map((data, idx) => (
+              <React.Fragment key={idx}>
+                {
+                  data.result.map((item, idx) => {
+                    // console.log(item)
+                    const { alt_description, urls } = item;
+                    console.log(alt_description)
+                    return ( 
+                      <React.Fragment key={urls.thumb}>
+                        <LazyLoadCard url={item.urls.small} alt={alt_description} keyword={keyword}/>
+                      </React.Fragment>
+                    )
+                  })
+                }
+              </React.Fragment>
+          ))
+        }
+      </SearchContainer>
+      
       {
         isFetchingNextPage && <Loading />
       }
       <div ref={targetRef} />
-    </SearchCardContainer>
+    </Container>
   )
 }
 
 export default  SearchCard;
 
-const SearchCardContainer = styled.div`
+const Container = styled.div`
   width: 100%;
+  padding: 1rem;
+`
+
+const SearchContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, auto));
-  /* grid-template-columns: repeat(5, 1fr); */
   gap: 10px;
-  overflow: hidden;
-  /* border: 5px solid red; */
-  padding: 1rem;
-  
-  & > img {
+
+  /* & > img {
     width: 100%;
     height: 100%;
     border-radius: 5px;
-  }
-
-  & + & {
-    margin-top: 1rem;
-  }  
-
+  } */
 `

@@ -1,21 +1,24 @@
 import React from "react";
 import styled from 'styled-components';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { Dispatch } from "react";
+import { delKeyword } from "../../store/keyword";
+import { useDispatch } from "react-redux";
 
 
-const Keyword = ({ text, id, deleteKeyword, setText, inputRef }) => {
-
+const Keyword = ({ text, id, setText, inputRef }) => {
+  const dispatch = useDispatch();
+  
   return (
     <KeywordContainer>
       <KeywordText onClick={(e) => {
         setText(text);
         inputRef.current.focus();
-        console.log(e)
       }}>
         {text}
       </KeywordText>
       <CloseBtn>
-        <AiOutlineDelete size={20} onClick={() => deleteKeyword(id, text)}/>
+        <AiOutlineDelete size={20} onClick={() => dispatch(delKeyword(id))}/>
       </CloseBtn>
     </KeywordContainer>
   )

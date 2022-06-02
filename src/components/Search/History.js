@@ -13,7 +13,7 @@ const History = ({ setOnHistory, keywords, deleteKeyword, setText, inputRef }) =
       </Header>
       <ListContainer>
         {
-          keywords.map(keyword => <Keyword key={keyword.id} text={keyword.text} deleteKeyword={deleteKeyword} id={keyword.id} setText={setText} inputRef={inputRef}/>) 
+          keywords.map(keyword => <Keyword key={keyword.id} text={keyword.text} id={keyword.id} setText={setText} inputRef={inputRef}/>) 
         }
       </ListContainer>
     </HistoryContainer>

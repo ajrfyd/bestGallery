@@ -1,8 +1,10 @@
 ## BestGallery
 
 ### 진행중인 기능 
-- ~~~infinite scroll~~~
+- ~~infinite scroll~~
+- ~~img lazy loading~~
 - 언마운트 애니메이션
+- 좋아요, 종아요 취소
 
 
 ### Infinite Scroll

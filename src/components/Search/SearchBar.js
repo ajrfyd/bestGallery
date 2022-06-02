@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from 'styled-components';
 import { BiSearchAlt2, BiHome } from 'react-icons/bi';
-import { searchData } from '../../store/keyword';
-import { useDispatch } from 'react-redux';
+import { setKeyword } from '../../store/keyword';
+import { useSelector, useDispatch } from 'react-redux';
+import { getKeyword } from "../../store/keyword";
 import History from "./History";
 import { notify } from "../../store/notify";
 import { useNavigate } from "react-router-dom";
@@ -17,14 +18,20 @@ const SearchBar = ({ setSearchState }) => {
   const inputRef = useRef(null);
   const textRef = useRef('');
   const navigate = useNavigate();
+  const { keywords } = useSelector(state => state.keywordReducer);
 
-  const [keywords, setKeywords] = useState(
-    JSON.parse(localStorage.getItem('keywords') || '[]'),
-  )
+
+  // const [keyword, setKeyword] = useState(
+  //   JSON.parse(localStorage.getItem('keywords') || '[]'),
+  // )
+
+  // useEffect(() => {
+  //   localStorage.setItem('keywords', JSON.stringify(keywords))
+  // }, [keywords])
 
   useEffect(() => {
-    localStorage.setItem('keywords', JSON.stringify(keywords))
-  }, [keywords])
+    dispatch(getKeyword());
+  }, [])
 
 
   const saveKeyword = (keyword) => {
@@ -32,19 +39,19 @@ const SearchBar = ({ setSearchState }) => {
       id: Date.now(),
       text: keyword,
     }
-    setKeywords([newKeyword, ...keywords])
+    // setKeywords([newKeyword, ...keywords]);
+    dispatch(setKeyword(newKeyword));
   }
 
   const deleteKeyword = (id, text) => {
-    const removed = keywords.filter(keyword => keyword.id !== id);
-    setKeywords(removed);
+    // const removed = keywords.filter(keyword => keyword.id !== id);
+    // setKeywords(removed);
     localStorage.removeItem(text)
   }
 
   const search = async (e) => {
     e.preventDefault();
     if(text === '') {
-      // alert('검색어를 입력하지 않았습니다.')
       dispatch(notify('검색어를 입력해 주세요'))
       return
     }
@@ -57,13 +64,12 @@ const SearchBar = ({ setSearchState }) => {
     navigate(`/search/${text}`);
     // dispatch(searchData(text))
 
-    setSearchState(true);
+    // setSearchState(true);
   }
 
   const getText = (e) => {
     setText(e.target.value);
   }
-
 
   return (
     <SearchBarContainer>
