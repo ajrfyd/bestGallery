@@ -60,3 +60,6 @@ export const useObserver = ({
 - return 전에 저런식으로 상태에 따라 로딩을 보여주면 
 - 무한스크롤이 진행되지 않는다.
 - 왜?? 요놈 때문에 고생
+
+## 참고
+[참고]:https://intrepidgeeks.com/tutorial/how-to-use-react-query-userinfinitequery

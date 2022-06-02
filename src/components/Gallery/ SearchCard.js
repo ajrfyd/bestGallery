@@ -7,6 +7,7 @@ import utils from "../../utils";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import LazyLoadCard from "./LazyLoadCard";
+import Error from "../Notification/Error";
 
 const SearchCard = () => {
   const targetRef = useRef(null);
@@ -61,7 +62,7 @@ const SearchCard = () => {
                   data.result.map((item, idx) => {
                     // console.log(item)
                     const { alt_description, urls } = item;
-                    console.log(alt_description)
+                    // console.log(alt_description)
                     return ( 
                       <React.Fragment key={urls.thumb}>
                         <LazyLoadCard url={item.urls.small} alt={alt_description} keyword={keyword}/>
@@ -73,9 +74,11 @@ const SearchCard = () => {
           ))
         }
       </SearchContainer>
-      
       {
         isFetchingNextPage && <Loading />
+      }
+      {
+        status ==='error' && <Error />
       }
       <div ref={targetRef} />
     </Container>

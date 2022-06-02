@@ -120,6 +120,8 @@ const ImgContainer = styled.div`
 `
 
 const Image = styled.img`
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
   box-shadow: 0 8px 20px -15px #000;
   line-height: 0;

@@ -12,6 +12,7 @@ import Notification from "./components/Notification/Notification";
 import { Routes, Route } from "react-router-dom";
 import Home from "./page/Home";
 import SearchCard from "./components/Gallery/ SearchCard";
+import TopComponent from "./page/TopComponent";
 
 const App = () => {
   const [searchState, setSearchState] = useState(false);
@@ -56,8 +57,10 @@ const App = () => {
         <Search setSearchState={setSearchState} />
         <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
         <Routes>
-          <Route path='/' element={<Home />}/>
-          <Route path='/search/:keyword' element={<SearchCard />}/>
+          {/* <Route element={<TopComponent/>}> */}
+            <Route path='/' element={<Home isLogin={isLogin}/>}/>
+            <Route path='/search/:keyword' element={<SearchCard />}/>
+          {/* </Route> */}
         </Routes>
       </Container>
       <Notification />

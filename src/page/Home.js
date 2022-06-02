@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { reqUser } from "../store/user"
 import styled from "styled-components";
 import Gallery from "../containers/Gallery/Gallery";
-import { getKeyword, delKeyword } from "../store/keyword";
+import Alert from "../components/Alert/Alert";
 
-const Home = () => {
+const Home = ({ isLogin }) => {
+  const [modal, setModal] = useState(false);
+
+  const closeHandler = () => setModal(false);
 
   return (
     <Container>
-      <Gallery />
+      <Gallery setModal={setModal}/>
+      <Alert modal={modal} closeHandler={closeHandler} isLogin={isLogin} text='로그인이 필요한 기능입니다'/>
     </Container>
   )
 }

@@ -4,8 +4,6 @@ import Card from "./Card";
 import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
-import useInfiniteScroll from "../../utils/useInfiniteScroll";
-
 
 
 const CardList = ({ apiData, isLoading, error, setLiked, setModal, dir, page, isFetched, visible, liked }) => {
@@ -116,7 +114,7 @@ const CardList = ({ apiData, isLoading, error, setLiked, setModal, dir, page, is
 export default CardList;
 
 const CardListContainer = styled.div`
-  line-height: 0;
+  /* line-height: 0; */
   animation-duration: 1.2s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
@@ -170,6 +168,12 @@ const CardListContainer = styled.div`
     column-count: 1;
     column-gap: 0;
   }
+
+  /* display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, auto)); */
+
+
+
   /* ${props => props.disapperar && css`
     animation-name: bounceOutRight;
   `} */

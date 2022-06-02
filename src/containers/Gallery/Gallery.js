@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import CardList from "../../components/Gallery/CardList";
+import CardContainer from "../../components/Gallery/CardContainer";
 import SearchCard from "../../components/Gallery/ SearchCard";
-import { getImgs } from "../../store/data";
 import Loading from "../../components/Loading/Loading";
 import { useQuery } from "react-query";
-import axios from "axios";
 import utils from "../../utils";
-import InfiniteSearch from "../../components/Gallery/InfiniteSearch";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const [page, setPage] = useState(1);
@@ -60,21 +57,23 @@ const Gallery = ({ apiData, searchState, setModal }) => {
     // console.log(visible)
 
 
-  if(isLoading) return <Loading hasMargin/>;
+  // if(isLoading) return <Loading hasMargin/>;
   if(isError) return <Error>Error!!</Error>
 
 
   return (
       <GalleryContainer >
-        {
+        {/* {
           searchState ? <SearchCard /> 
           : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched} isLoading={isLoading} visible={visible} setVisible={setVisible} liked={liked}/>
           
-        }
-        {/* {
-          searchState ? <InfiniteSearch /> 
-          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched}/>
         } */}
+        {
+          isLoading && <Loading />
+        }
+        {
+          data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal}/>
+        }
         {
           !searchState && (
             <PageHandler>
@@ -102,6 +101,8 @@ export default Gallery;
 const GalleryContainer = styled.div`
   padding: 1rem;
   text-align: center;
+  /* border: 5px dashed red; */
+  /* height: 100vh; */
 `
 
 const Error = styled.div`
