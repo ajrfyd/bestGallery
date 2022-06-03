@@ -47,22 +47,25 @@ export default {
     );
     return data;
   },
-  reqLike: async (token, id) => {
+  reqLike: async ({token, id}) => {
     const url = `https://api.unsplash.com/photos/${id}/like`
+    // console.log(token);
     const { data } = await axios.post(
       url,
-      { id },
+      { params: { id }},
+      // { id },
       {
         headers: {
           Authorization: `Bearer ${token}`
         }
       }
       )
+      console.log(data);
     return data;
   },
   reqUnLike: async (token, id) => {
     const url = `https://api.unsplash.com/photos/${id}/like`
-    console.log(token)
+    // console.log(token)
     const { data } = await axios.delete(
       url,
       {
@@ -77,6 +80,7 @@ export default {
   getMainImgs: async (page) => {
     const API = `https://api.unsplash.com/photos/?client_id=${process.env.REACT_APP_ACCESS_KEY}&page=${page}&per_page=20`
     const res = await axios.get(API);
+    console.log('zzzzz')
     return res;
   },
   useObserver: ({ 

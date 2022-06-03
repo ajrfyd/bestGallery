@@ -4,21 +4,28 @@ import CardList from "../../components/Gallery/CardList";
 import CardContainer from "../../components/Gallery/CardContainer";
 import SearchCard from "../../components/Gallery/ SearchCard";
 import Loading from "../../components/Loading/Loading";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import utils from "../../utils";
+import Error from "../../components/Notification/Error";
 
 const Gallery = ({ apiData, searchState, setModal }) => {
   const [page, setPage] = useState(1);
   const [liked, setLiked] = useState(false);
   const [dir, setDir] = useState('right');
   
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError, error, isFetched } = useQuery(
     ['getMainImgs', page],
     () => utils.getMainImgs(page),
     {
       // keepPreviousData: true,
       cacheTime: 0,
-      // enabled: !!liked
+      // enabled: !!liked,
+      refetchOnWindowFocus: false,
+      // onSuccess: data => {
+      //   queryClient.invalidateQueries('')
+      // }
     }
     )
 
@@ -29,18 +36,6 @@ const Gallery = ({ apiData, searchState, setModal }) => {
         setVisible(true)
       }
     }, [isLoading, data])
-
-    // useEffect(() => {
-    //   utils.getMainImgs();
-    // }, [liked])
-    // console.log(visible);
-    // useEffect(() => {
-    //   setVisible(true)
-
-    //   return() => {
-    //     console.log('%cGallary Unmount', 'color: blue');
-    //   }
-    // }, []);
 
     const prevHandler = () => {
       setPage(page => page - 1);
@@ -58,18 +53,16 @@ const Gallery = ({ apiData, searchState, setModal }) => {
 
 
   // if(isLoading) return <Loading hasMargin/>;
-  if(isError) return <Error>Error!!</Error>
+  // if(isError) return <Error>Error!!</Error>
 
 
   return (
       <GalleryContainer >
-        {/* {
-          searchState ? <SearchCard /> 
-          : <CardList apiData={data.data} setLiked={setLiked} setModal={setModal} dir={dir} page={page} isFetched={isFetched} isLoading={isLoading} visible={visible} setVisible={setVisible} liked={liked}/>
-          
-        } */}
         {
           isLoading && <Loading />
+        }
+        {
+          isError && <Error />
         }
         {
           data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal} visible={visible} dir={dir}/>
@@ -101,13 +94,13 @@ const GalleryContainer = styled.div`
   /* height: 100vh; */
 `
 
-const Error = styled.div`
-  display: flex;
-  font-size: 5rem;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-`
+// const Error = styled.div`
+//   display: flex;
+//   font-size: 5rem;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+// `
 const ReqMore = styled.button`
   font-weight: bold;
   border: none;

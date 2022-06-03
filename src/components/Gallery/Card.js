@@ -6,20 +6,16 @@ import { useSelector } from "react-redux";
 import Alert from "../Alert/Alert";
 import utils from "../../utils";
 import IndividualImg from "./IndividualImg";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient, useMutation } from "react-query";
 
 const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
+  const [cardLike, setCardLike] = useState(likes);
   const text = '로그인을 해야 사용할 수 있는 기능입니다. '
-  useEffect(() => { 
-    // console.log('mount');
+  const queryClient = useQueryClient();
 
-    return () => {
-      // console.log('unmount')
-    }
-  }, [])
   const [zoom, setZoom] = useState(false);
   const [position, setPosition] = useState({
     top: 0,
@@ -27,6 +23,18 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
     height: 0,
     left: 0
   })
+
+  const likeMutation = useMutation(utils.reqLike,
+    {
+      onSuccess: (data) => {
+        setCardLike(data.photo.likes);
+        queryClient.invalidateQueries('getMainImgs');
+      }
+    }
+  )
+
+  // const token = localStorage.getItem('access_token');
+
   const targetRef = useRef(null);
 
   const handleImgClick = useCallback(() => {
@@ -54,17 +62,20 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
 
     if(token) {
       if(!like) {
-        try{
-          const { photo: { liked_by_user }, user } = await utils.reqLike(token, id);
-          if(liked_by_user) {
-            console.log('like!')
-            setLiked(true);
-            setLike(true);
-          }        
+        // try{
+        //   const { photo: { liked_by_user }, user } = await utils.reqLike(token, id);
+        //   console.log(liked_by_user);
+        //   if(liked_by_user) {
+        //     console.log('like!')
+        //     setLiked(true);
+        //     setLike(true);
+        //   }        
   
-        } catch(e) {
-          throw new Error('Not Found!')
-        }
+        // } catch(e) {
+        //   throw new Error('Not Found!')
+        // }
+        // console.log(typeof id)
+        likeMutation.mutate({token, id});
       } else {
         try {
           const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
@@ -78,9 +89,18 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
       }
     }
   }
+  // const { data, status } = useQuery('like',
+  //   () => utils.reqLike(token, id),
+  //   {
+  //     enabled: !!like,
+  //     onSuccess: () => {
+  //       console.log('hi')
+  //       queryClient.invalidateQueries('getMainImgs')
+  //     }
+  //   })
   
-  // const {data} = useQuery('like', () => Utils.getMainImgs(1), {enabled: liked})
 
+    // console.log(data);
 
   return (
     <>
@@ -89,7 +109,7 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
           <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick} />
           <Utils>
             <FaRegThumbsUp onClick={reqLikes} style={{ color: like ? 'red' : 'blue' }}/>
-            <Likes > &times; {likes}</Likes>
+            <Likes > &times; {cardLike}</Likes>
           </Utils>
         </ImgContainer>
       </CardContainer>
