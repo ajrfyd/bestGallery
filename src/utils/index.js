@@ -63,7 +63,7 @@ export default {
       console.log(data);
     return data;
   },
-  reqUnLike: async (token, id) => {
+  reqUnLike: async ({token, id}) => {
     const url = `https://api.unsplash.com/photos/${id}/like`
     // console.log(token)
     const { data } = await axios.delete(

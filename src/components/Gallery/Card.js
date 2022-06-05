@@ -28,12 +28,21 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
     {
       onSuccess: (data) => {
         setCardLike(data.photo.likes);
+        setLike(true);
         queryClient.invalidateQueries('getMainImgs');
       }
     }
   )
 
-  // const token = localStorage.getItem('access_token');
+  const unLikeMutaion = useMutation(utils.reqUnLike,
+    {
+      onSuccess: (data) => {
+        setCardLike(data.photo.likes);
+        setLike(false);
+        queryClient.invalidateQueries('getMainImgs');
+      }
+    }
+    )
 
   const targetRef = useRef(null);
 
@@ -77,15 +86,16 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
         // console.log(typeof id)
         likeMutation.mutate({token, id});
       } else {
-        try {
-          const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
-          if(!liked_by_user) {
-            console.log('cancel!!')
-            setLike(false);
-          }
-        } catch(e) {
-          throw new Error('Not found!')
-        }
+        // try {
+        //   const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
+        //   if(!liked_by_user) {
+        //     console.log('cancel!!')
+        //     setLike(false);
+        //   }
+        // } catch(e) {
+        //   throw new Error('Not found!')
+        // }
+        unLikeMutaion.mutate({ token, id })
       }
     }
   }

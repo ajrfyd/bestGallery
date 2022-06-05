@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from "react-query";
 import utils from "../../utils";
 import Error from "../../components/Notification/Error";
 
-const Gallery = ({ apiData, searchState, setModal }) => {
+const Gallery = ({ searchState, setModal }) => {
   const [page, setPage] = useState(1);
   const [liked, setLiked] = useState(false);
   const [dir, setDir] = useState('right');
@@ -22,7 +22,7 @@ const Gallery = ({ apiData, searchState, setModal }) => {
       // keepPreviousData: true,
       cacheTime: 0,
       // enabled: !!liked,
-      refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
       // onSuccess: data => {
       //   queryClient.invalidateQueries('')
       // }
@@ -55,6 +55,7 @@ const Gallery = ({ apiData, searchState, setModal }) => {
   // if(isLoading) return <Loading hasMargin/>;
   // if(isError) return <Error>Error!!</Error>
 
+  console.log(data);
 
   return (
       <GalleryContainer >
