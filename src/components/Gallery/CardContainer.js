@@ -22,7 +22,7 @@ const CardContainer = ({ apiData, setLiked, setModal, visible, dir }) => {
     <Container disappear={animate} dir={dir}>
       {
         data.map(item => (
-          <Card key={item.id} url={item.urls.small} likes={item.likes} id={item.id} setLiked={setLiked} setModal={setModal} url2={item.urls.small_s3}/>
+          <Card key={item.id} url={item.urls.small} likes={item.likes} id={item.id} setLiked={setLiked} setModal={setModal} url2={item.urls.small_s3} likeMe={item.liked_by_user}/>
         ))
       }
     </Container>
@@ -51,4 +51,10 @@ const Container = styled.div`
     animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
   `}
 
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 460px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `

@@ -66,7 +66,7 @@ const Gallery = ({ searchState, setModal }) => {
           isError && <Error />
         }
         {
-          data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal} visible={visible} dir={dir}/>
+          data && <CardContainer apiData={data} setLiked={setLiked} setModal={setModal} visible={visible} dir={dir} />
         }
         <PageHandler>
           <Btn 

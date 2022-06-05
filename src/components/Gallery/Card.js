@@ -8,7 +8,7 @@ import utils from "../../utils";
 import IndividualImg from "./IndividualImg";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 
-const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
+const Card = ({ url, likes, id, url2, setLiked, setModal, liked, likeMe }) => {
   const { isLogin } = useSelector(state => state.userReducer);
   // const [modal, setModal] = useState(false);
   const [like, setLike] = useState(false);
@@ -118,7 +118,7 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked }) => {
         <ImgContainer>
           <Image src={url} alt='Image' ref={targetRef} onClick={handleImgClick} />
           <Utils>
-            <FaRegThumbsUp onClick={reqLikes} style={{ color: like ? 'red' : 'blue' }}/>
+            <FaRegThumbsUp onClick={reqLikes} style={{ color: like || likeMe ? 'red' : 'blue' }}/>
             <Likes > &times; {cardLike}</Likes>
           </Utils>
         </ImgContainer>
