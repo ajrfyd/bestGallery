@@ -71,46 +71,12 @@ const Card = ({ url, likes, id, url2, setLiked, setModal, liked, likeMe }) => {
 
     if(token) {
       if(!like) {
-        // try{
-        //   const { photo: { liked_by_user }, user } = await utils.reqLike(token, id);
-        //   console.log(liked_by_user);
-        //   if(liked_by_user) {
-        //     console.log('like!')
-        //     setLiked(true);
-        //     setLike(true);
-        //   }        
-  
-        // } catch(e) {
-        //   throw new Error('Not Found!')
-        // }
-        // console.log(typeof id)
         likeMutation.mutate({token, id});
       } else {
-        // try {
-        //   const { photo: { liked_by_user }, user } = await utils.reqUnLike(token, id);
-        //   if(!liked_by_user) {
-        //     console.log('cancel!!')
-        //     setLike(false);
-        //   }
-        // } catch(e) {
-        //   throw new Error('Not found!')
-        // }
         unLikeMutaion.mutate({ token, id })
       }
     }
   }
-  // const { data, status } = useQuery('like',
-  //   () => utils.reqLike(token, id),
-  //   {
-  //     enabled: !!like,
-  //     onSuccess: () => {
-  //       console.log('hi')
-  //       queryClient.invalidateQueries('getMainImgs')
-  //     }
-  //   })
-  
-
-    // console.log(data);
 
   return (
     <>
