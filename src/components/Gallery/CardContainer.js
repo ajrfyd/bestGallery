@@ -36,7 +36,7 @@ const Container = styled.div`
   height: 100%;
   /* border: 5px solid #6200ee; */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 
   animation-fill-mode: both;
@@ -51,10 +51,14 @@ const Container = styled.div`
     animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
   `}
 
-  @media (max-width: 320px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 760px) {
+    grid-template-columns: repeat(4, 1fr);
   }
   @media (max-width: 460px) {
     grid-template-columns: repeat(2, 1fr);
   }
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
+  
 `
