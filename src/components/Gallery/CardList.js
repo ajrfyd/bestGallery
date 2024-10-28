@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css, keyframes } from "styled-components";
 import Card from "./Card";
 import { useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
 
-
-
-const CardList = ({ apiData, isLoading, error, setLiked, setModal, dir, page, isFetched, visible, liked }) => {
+const CardList = ({
+  apiData,
+  isLoading,
+  error,
+  setLiked,
+  setModal,
+  dir,
+  page,
+  isFetched,
+  visible,
+  liked,
+}) => {
   //! Prev
   // const [animate, setAnimate] = useState(false);
   // const [localVisible, setLocalVisible] = useState(isFetched);
-  
+
   // const animation = animate
   // ? (dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight')
   // : (dir === 'left' ? 'bounceInLeft' : 'bounceInRight');
-  
-  
+
   // useEffect(() => {
   //   if(localVisible && !isFetched) {
   //     setAnimate(true);
@@ -52,64 +60,62 @@ const CardList = ({ apiData, isLoading, error, setLiked, setModal, dir, page, is
 
   // if(!animate && !appear) return null;
 
-  //!!!!!!! 
+  //!!!!!!!
 
   const [localState, setLocalState] = useState(visible);
   const [animate, setAnimate] = useState(false);
   // console.log('%cLocalState', 'color: red', localState);
-  
+
   useEffect(() => {
-    console.log(visible)
-    if(localState && !visible) {
+    if (localState && !visible) {
       setAnimate(true);
-      console.log('%cAnimation start', 'color: red');
-      setTimeout(() =>  {
-        console.log('asdasd')
+      console.log("%cAnimation start", "color: red");
+      setTimeout(() => {
+        console.log("asdasd");
         setAnimate(false);
       }, 1000);
     }
     setLocalState(visible);
-  }, [visible, localState])
+  }, [visible, localState]);
 
   useEffect(() => {
     return () => {
-    if(!visible) {
-      // setVisible(prev => !prev);
-      // setAnimate(true);
-      // console.log('%cunmount!', '#fff')
-      // setTimeout(() => setAnimate(false), 250);
-    }
-    }
-  }, [])
+      if (!visible) {
+        // setVisible(prev => !prev);
+        // setAnimate(true);
+        // console.log('%cunmount!', '#fff')
+        // setTimeout(() => setAnimate(false), 250);
+      }
+    };
+  }, []);
 
-
-  if(!animate && !localState) return null;
+  if (!animate && !localState) return null;
 
   return (
     <>
-      <CardListContainer 
+      <CardListContainer
         // className={`animated ${animation}`}
         // disapperar={!isFetched}
         disappear={!visible}
         dir={dir}
       >
-        {
-          apiData ? apiData.map(data => (
-            <Card 
-              key={data.id} 
-              url={data.urls.thumb} 
-              likes={data.likes} 
-              id={data.id} 
-              url2={data.urls.small_s3} 
-              setLiked={setLiked}
-              setModal={setModal}
-            />
-          )) : null
-        }
+        {apiData
+          ? apiData.map((data) => (
+              <Card
+                key={data.id}
+                url={data.urls.thumb}
+                likes={data.likes}
+                id={data.id}
+                url2={data.urls.small_s3}
+                setLiked={setLiked}
+                setModal={setModal}
+              />
+            ))
+          : null}
       </CardListContainer>
     </>
-  )
-}
+  );
+};
 
 export default CardList;
 
@@ -118,10 +124,11 @@ const CardListContainer = styled.div`
   animation-duration: 1.2s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  ${({dir}) => dir && css`
-    animation-name: ${dir === 'right' ? 'bounceInRight' : 'bounceInLeft'};
-  `}
-
+  ${({ dir }) =>
+    dir &&
+    css`
+      animation-name: ${dir === "right" ? "bounceInRight" : "bounceInLeft"};
+    `}
 
   @media (max-width: 2000px) {
     -webkit-column-count: 5;
@@ -157,7 +164,6 @@ const CardListContainer = styled.div`
     -moz-column-gap: 0;
     column-count: 2;
     column-gap: 0;
-  
   }
 
   @media (max-width: 440px) {
@@ -172,14 +178,16 @@ const CardListContainer = styled.div`
   /* display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, auto)); */
 
+  /* ${(props) =>
+    props.disapperar &&
+    css`
+      animation-name: bounceOutRight;
+    `} */
 
-
-  /* ${props => props.disapperar && css`
-    animation-name: bounceOutRight;
-  `} */
-
-  ${({disappear, dir}) => disappear && dir && css`
-    animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
-  `}
-`
-
+  ${({ disappear, dir }) =>
+    disappear &&
+    dir &&
+    css`
+      animation-name: ${dir === "right" ? "bounceOutLeft" : "bounceOutRight"};
+    `}
+`;

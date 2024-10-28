@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled, { css } from 'styled-components';
 
 const Loading = ({ hasMargin }) => {
-  const deg = Array.from(new Array(20), (_, idx) => idx);
+  const deg = useCallback(Array.from(new Array(20), (_, idx) => idx), []);
   
   return (
     <LoadingSpinner style={hasMargin && { marginTop: '40vh' } }>
@@ -22,7 +22,7 @@ const Loading = ({ hasMargin }) => {
   )
 }
 
-export default Loading;
+export default React.memo(Loading);
 
 Loading.defaultProps = {
   minHeight: '100vh',

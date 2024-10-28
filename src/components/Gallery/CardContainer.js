@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes, css } from "styled-components";
 import Card from "./Card";
 
 const CardContainer = ({ apiData, setLiked, setModal, visible, dir }) => {
@@ -9,25 +9,33 @@ const CardContainer = ({ apiData, setLiked, setModal, visible, dir }) => {
   // const [dir, setDir] = useState('left');
 
   useEffect(() => {
-    if(!visible && localState) {
+    if (!visible && localState) {
       setAnimate(true);
-      console.log('Animate!')
+      console.log("Animate!");
       setTimeout(() => setAnimate(false), 250);
     }
 
     setLocalState(visible);
-  }, [visible, localState])
+  }, [visible, localState]);
 
   return (
     <Container disappear={animate} dir={dir}>
-      {
-        data.map(item => (
-          <Card key={item.id} url={item.urls.small} likes={item.likes} id={item.id} setLiked={setLiked} setModal={setModal} url2={item.urls.small_s3} likeMe={item.liked_by_user}/>
-        ))
-      }
+      {data.map((item) => (
+        <Card
+          key={item.id}
+          url={item.urls.small}
+          likes={item.likes}
+          id={item.id}
+          setLiked={setLiked}
+          setModal={setModal}
+          url2={item.urls.small_s3}
+          likeMe={item.liked_by_user}
+          alt_description={item.alt_description}
+        />
+      ))}
     </Container>
-  )
-}
+  );
+};
 
 export default CardContainer;
 
@@ -42,14 +50,19 @@ const Container = styled.div`
   animation-fill-mode: both;
   animation-duration: 1.2s;
   animation-name: bounceInRight;
-  
-  ${({ dir }) => dir && css`
-    animation-name: ${dir === 'right' ? 'bounceInRight' : 'bounceInLeft'};
-  `}
 
-  ${({ disappear, dir }) => disappear && dir && css`
-    animation-name: ${dir === 'right' ? 'bounceOutLeft' : 'bounceOutRight'};
-  `}
+  ${({ dir }) =>
+    dir &&
+    css`
+      animation-name: ${dir === "right" ? "bounceInRight" : "bounceInLeft"};
+    `}
+
+  ${({ disappear, dir }) =>
+    disappear &&
+    dir &&
+    css`
+      animation-name: ${dir === "right" ? "bounceOutLeft" : "bounceOutRight"};
+    `}
 
   @media (max-width: 760px) {
     grid-template-columns: repeat(4, 1fr);
@@ -60,5 +73,4 @@ const Container = styled.div`
   @media (max-width: 320px) {
     grid-template-columns: 1fr;
   }
-  
-`
+`;
